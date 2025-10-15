@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Web-Eventos</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎟️</text></svg>">
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#5b13ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#161022",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative min-h-screen">
+        <div class="absolute inset-0 bg-repeat bg-[length:40px_40px] opacity-5" style="
+          background-image: url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.1\' fill-rule=\'evenodd\'%3E%3Cpath d=\'M0 40L40 0H20L0 20M40 40V20L20 40\'/%3E%3C/g%3E%3C/svg%3E');
+        "></div>
+
+        <div class="relative z-10 flex h-full grow flex-col">
+            <header class="sticky top-0 z-20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+                <div
+                    class="container mx-auto flex items-center justify-between whitespace-nowrap px-4 sm:px-6 lg:px-8 py-3 border-b border-white/10 dark:border-white/10">
+                    <div class="flex items-center gap-8">
+                        <div class="flex items-center gap-2 text-black dark:text-white">
+                            <span class="material-symbols-outlined text-primary text-3xl">
+                                confirmation_number
+                            </span>
+                            <h2 class="text-lg font-bold">WEB-EVENTOS</h2>
+                        </div>
+                        <nav class="hidden md:flex items-center gap-6">
+                            <a class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors" href="#eventos">Eventos</a>
+                            <a class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors" href="#testimonios">Testimonios</a>
+                            <a class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors" href="#pruebas">Pruebas</a>
+                        </nav>
+                    </div> 
+                    <!-- <div class="flex items-center gap-2">
+                        <button id="search-button" class="flex items-center justify-center rounded-full h-10 w-10 bg-primary/10 dark:bg-primary/20 text-black/80 dark:text-white/80 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors">
+                            <span class="material-symbols-outlined text-lg">search</span>
+                        </button>
+                        <button id="favorite-button" class="flex items-center justify-center rounded-full h-10 w-10 bg-primary/10 dark:bg-primary/20 text-black/80 dark:text-white/80 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors">
+                            <span class="material-symbols-outlined text-lg">favorite_border</span>
+                        </button>
+                        <button id="account-button" class="flex items-center justify-center rounded-full h-10 w-10 bg-primary/10 dark:bg-primary/20 text-black/80 dark:text-white/80 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors">
+                            <span class="material-symbols-outlined text-lg">account_circle</span>
+                        </button>
+                    </div> -->
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow">
+                <div class="flex flex-col gap-12">
+                    <section id="eventos" class="flex flex-col gap-12">
+                        <h1
+                            class="text-4xl md:text-5xl font-extrabold text-center text-black dark:text-white tracking-tight">
+                            Eventos Disponibles
+                        </h1>
+    
+                        <!-- Events Grid - Se llena dinámicamente -->
+                        <div id="events-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                            <!-- Las tarjetas de eventos se insertan aquí -->
+                        </div>
+                    </section>
+
+                    <!-- Testimonials Section -->
+                    <section id="testimonios" class="py-16">
+                        <div class="flex flex-col gap-12">
+                            <h2 class="text-4xl font-extrabold text-center text-black dark:text-white tracking-tight">
+                                Lo que dicen nuestros clientes
+                            </h2>
+                            <div id="testimonials-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <!-- Los testimonios se insertan aquí -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Sales Screenshots Section -->
+                    <section id="pruebas" class="py-16">
+                        <div class="flex flex-col gap-12">
+                            <h2 class="text-4xl font-extrabold text-center text-black dark:text-white tracking-tight">
+                                Capturas de Ventas
+                            </h2>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <img alt="Captura de venta 1"
+                                    class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVDIogpohBvqFQKGLJcF955DVshfkSRdUJ-0m8jGeivDCMKL_JzVkj9mfrBUY2TkKW8b0v8L-aiKHUbJWMWbKCzuxJy1kvxfyekOZFS3FYU2elHWyZnes_QAURo2ZlmVcGcskOUVVq4nnG7mryV5H8s74ODyb9gzUR1Jy01G2NXHUo_D83VmhvwD_kK8TPc_FrCMRRv8VFve-eGhoXS19HKiDPkOvx95P6s1AGOI1IyU2tnwN4yeRONG_ngEPTMib4r6jm4Tib8H0" />
+                                <img alt="Captura de venta 2"
+                                    class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_kefafMc0SUHfVfcUV9mZ4IiBV8hpyvNAdJwhWkAFjXcJwwu5gnBWNqGoFxgaMmr7LlHZ8qP-7ew4Bxa8LAF3Xlp1XCaC4NgxLWZc8PnOf9ggFdryyfK5cPnG82BnJcuzC1MBZ0VnFPYRczWwJd1w_u0_JO_hKqWnqKWHyX9gqW3lKz9Zsm_mlxExjoivkeLPh3WHDFkU6rMULYSkdf8D17V_S17aCxMKpuACG0t8MQKndjpSQUG3TmRhB8HrIJYRhUtkZKo2BCc" />
+                                <img alt="Captura de venta 3"
+                                    class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF4OTNpJSOFaJyFPkp3LaVdv9Ngvv-oSVgL5EPDePxuvdJIBVNRQyoMy7FS5Ev4S8W-ewPNm_rUyiaIX5EJbtKcdOBLzVz70vRQWyo14GGkYXNCtS_4-5ZtOtmnZ8k7RULbXc2nKPafwRD6I7VsrLoayMHN3KkVXgZXKBfIayM88RYoSeMPfx-yFWlS1yktNLCkTF3pdBSiSYEVwd8kkFKnk_bceWE--O59akQ6MoGcAC7el5I_7JpM23aUi1mldCzLhxYhvYiEaE" />
+                                <img alt="Captura de venta 4"
+                                    class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnOAKMTXO8_c5BtkuWgoonx3uf00OoE0nLZlCTsAS2u1wvsZEklP9NMlCF1BVkmQEyePM_7z2vnZaPRugV2yEETUk4aGZXZ-3MsdzA07oLGryV-AveswaF0ju_28kwb14mpN9uiQVSfFtGv1G_RWd9PHbbtOHnSb6b4fdgqAO0m29ujQ1A6--8XpLadlm6OvOrt41HHqP1Pg-kMFm3a9u2HlO3BK7hF6xR6FSTwbA15X2GwnRiWE9LlwTwu8NsM6eF6U6WILF2Ziw" />
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="bg-background-dark/80 backdrop-blur-sm mt-auto relative ticket-bg border-t border-white/10">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-white/70">
+                        <div class="col-span-1 md:col-span-2">
+                            <div class="flex items-center gap-2 text-white mb-4">
+                                <span class="material-symbols-outlined text-primary text-3xl">
+                                    confirmation_number
+                                </span>
+                                <h2 class="text-xl font-bold">WEB-EVENTOS</h2>
+                            </div>
+                            <p class="text-sm max-w-md">Tu portal para los mejores eventos. Compra y vende entradas de
+                                forma segura y sencilla. ¡No te pierdas ni un momento de la acción!</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-4">Contacto</h4>
+                            <ul class="space-y-2 text-sm">
+                                <li><a class="hover:text-primary transition-colors flex items-center gap-2"
+                                        href="#"><span class="material-symbols-outlined text-base">email</span>
+                                        info@evently.com</a></li>
+                                <li><a class="hover:text-primary transition-colors flex items-center gap-2"
+                                        href="#"><span class="material-symbols-outlined text-base">phone</span> +1 234
+                                        567 890</a></li>
+                                <li><a class="hover:text-primary transition-colors flex items-center gap-2"
+                                        href="#"><span class="material-symbols-outlined text-base">location_on</span>
+                                        123 Calle Falsa, Ciudad Gótica</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white mb-4">Redes Sociales</h4>
+                            <div class="flex space-x-4">
+                                <a class="text-white/70 hover:text-primary transition-colors" href="#">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.494v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z">
+                                        </path>
+                                    </svg>
+                                </a>
+                                <a class="text-white/70 hover:text-primary transition-colors" href="#">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-.424.727-.666 1.581-.666 2.477 0 1.61.82 3.027 2.054 3.847-.764-.024-1.482-.234-2.11-.583v.06c0 2.256 1.605 4.14 3.737 4.568-.39.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.303 3.198 4.34 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.063 1.328 4.523 2.096 7.14 2.096 8.569 0 13.255-7.098 13.255-13.254 0-.202-.005-.403-.014-.604.91-.658 1.7-1.476 2.323-2.41z">
+                                        </path>
+                                    </svg>
+                                </a>
+                                <a class="text-white/70 hover:text-primary transition-colors" href="#">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.07 4.85-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44c0-.795-.645-1.44-1.441-1.44z">
+                                        </path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-8 border-t border-white/10 text-center text-sm text-white/50">
+                        <p>© 2025 Web-Eventos. Todos los derechos reservados.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+
+    <!-- Modal de Entradas -->
+    <div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+        id="ticketModal">
+        <div class="relative w-full max-w-lg m-4">
+            <div
+                class="bg-background-dark rounded-xl shadow-2xl shadow-primary/20 border border-white/10 overflow-hidden">
+                <div class="relative p-8">
+                    <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-repeat bg-[length:20px_20px] opacity-10" style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E&quot;);"></div>
+                    <button class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"
+                        onclick="document.getElementById('ticketModal').classList.add('hidden')">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                    <div class="text-center mb-6">
+                        <h2 class="text-3xl font-bold text-white tracking-tight" id="modal-event-title"></h2>
+                        <p class="text-white/60 mt-1">Selecciona tu tipo de entrada</p>
+                    </div>
+                    <div class="space-y-4" id="modal-ticket-types">
+                        <!-- Ticket types will be injected here -->
+                    </div>
+                    <div class="mt-8">
+                        <a class="w-full flex items-center justify-center rounded-lg h-12 px-6 bg-green-500 text-white text-base font-bold leading-normal tracking-wide hover:bg-green-600 transition-colors"
+                            href="#" target="_blank" id="whatsapp-buy-link">
+                            <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.586-1.459l-6.323 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.731 6.086l.474.852-1.107 4.054 4.144-1.085.826.495z">
+                                </path>
+                            </svg>
+                            <span class="truncate">Comprar entrada en WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
