@@ -13,6 +13,7 @@ function initApp() {
     console.log(`✅ ${testimonials.length} testimonios cargados`);
     
     initHeaderInteractions();
+    initImageModal();
     
     console.log('🎉 Aplicación lista!');
 }
@@ -38,6 +39,31 @@ function initHeaderInteractions() {
         accountBtn.addEventListener('click', () => {
             console.log('👤 Cuenta activada');
             // Aquí puedes implementar la lógica de cuenta de usuario
+        });
+    }
+}
+
+function initImageModal() {
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const eventsGrid = document.getElementById('events-grid');
+
+    if (eventsGrid) {
+        eventsGrid.addEventListener('click', (e) => {
+            if (e.target.closest('.expand-button')) {
+                const button = e.target.closest('.expand-button');
+                const imageSrc = button.dataset.image;
+                if (imageSrc) {
+                    modalImage.src = imageSrc;
+                    imageModal.classList.remove('hidden');
+                }
+            }
+        });
+    }
+
+    if (imageModal) {
+        imageModal.addEventListener('click', () => {
+            imageModal.classList.add('hidden');
         });
     }
 }

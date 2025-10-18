@@ -1,3 +1,7 @@
+/*
+* Prefijos de-webkit- y -moz- para una mejor compatibilidad con los navegadores.
+*/
+
 * {
     scroll-behavior: smooth;
 }
@@ -38,4 +42,32 @@ body {
             rgba(255, 255, 255, 0.1) 50%,
             transparent 50%);
     background-size: 8px 1px;
+}
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.expand-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    padding: 0.5rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.image-container:hover .expand-button {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#imageModal {
+    transition: opacity 0.3s ease;
 }

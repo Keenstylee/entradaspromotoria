@@ -13,51 +13,85 @@
 export const events = [
     {
         id: 1,
-        title: "Concierto de Rock en Vivo",
-        date: "15 de Julio, 2024",
-        location: "Estadio Central",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB-Xxq6xgMjJK2_WxaL5m4v2Qv8vMx0zsCljyv4X1rnyWA4ggNJItBwrVG5AS3F3dG1Zv-yZCjk0hkde_w6lTSYCidxHyzr3JWIAjy3Iiq8gb414so6liDQjuIKB_f1Vdv0r3eb7dDcaJ0OXvve5AbUTaKo-YVS7TqA2S-b_iyIPTs7YiVk7VukHcSiK0QGkJeAodfV_-ilqYdkjWs9yr7NaPBTRsjyW-se4eX1CQn-M1pKLJX3mXcDpyAkMznraYGa-2JgbuoK4rc",
+        title: "CARLCOX",
+        description: "¡El rey está de regreso! 👑<br><br>CarlCox se apodera de nuestra ciudad este 16 de noviembre para nuestro primer sunset open air en Paradiso Perú.<br>Un viaje sonoro comandado por la leyenda más grande del techno.🔥",
+        date: "15 de noviembre, 2025",
+        location: "Paradiso Lima",
+        image: "img/eventos/evento-1.jpg",
         category: "música",
         tickets: [
-            { type: "General", price: 50.00, description: "Acceso al evento." },
-            { type: "VIP", price: 120.00, description: "Acceso preferencial y merchandising." },
-            { type: "SuperVIP", price: 250.00, description: "Meet & Greet con los artistas." }
+            { type: "GENERAL", price: 150.00, description: "" },
+            { type: "VIP", price: 280.00, description: "" },
         ]
     },
     {
         id: 2,
-        title: "Festival de Jazz Urbano",
-        date: "22 de Agosto, 2024",
-        location: "Parque del Lago",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAYg8BedqpvRHCJt3OryHluAsQzTwaR2gUrpxkN92MHAA_gsHH7ui4KjNhffc6ZLQwmW_g3q9aGuXPVVsYsEZennZeaf-tph_DiQtHk-Z3tMSlj80OjACLS7i5vHW4wsV_79MdP1GHAyPo8i99YfIkoI73tr2b6tASK4pV6qXx1nAQiD01Lewszxte8qeFf9xKOYdq_U2xNH7qu2Aposay1KbGWGHN-TJSNLPFl23HGTAXs5DvDX16F-WgesBIRn38OcLK5oXa0JY",
+        title: "RESISTANCE",
+        description: "Vuelve el poder, la energía y la conexión que solo RESISTANCE puede crear.<br>Este 5 de diciembre, prepárate para vivirlo al máximo. 🔥",
+        date: "05 de diciembre, 2025",
+        location: "Club Cultural Lima",
+        image: "img/eventos/evento-2.png",
         category: "música",
         tickets: [
-            { type: "General", price: 40.00, description: "Acceso al evento." },
-            { type: "VIP", price: 100.00, description: "Acceso preferencial y zona exclusiva." }
+            { type: "GENERAL", price: 85.00, description: "" },
+            { type: "VIP", price: 125.00, description: "" },
+            { type: "DJ BOOTH", price: 285.00, description: "" },
         ]
     },
     {
         id: 3,
-        title: "Noche de Comedia con Estrellas",
-        date: "5 de Septiembre, 2024",
-        location: "Teatro Metropolitano",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDAVEf5wxDYt-pAm5n6-C-_39_cJApF8cESmqg7bDVJOrhJiRCZMxtFxd05-17HQGv-U4fvq4xFloORge_B3pR7A0mEJNRC0i2neHTypBBo1eSxqP8X1GdlrMnNVOeaYk3O7oN45xTYkvtKyl6-WAQTk-h0Ad9rivAR36lAJvxP3OATVjKG1CMWBR3sVDrs6X0QdJHTwE2_QJhoaO1oP8FD7LcIwvLWrw69WR4hYXxodPrgUWbfnR0td_hn5NV-2d1q9PwtfnR3kbM",
-        category: "comedia",
+        title: "DALEX",
+        description: "🎪 LA CARPA SE ABRE…<br>Ya no es solo un rumor. Bubu está lista.<br>La noche más oscura del año se acerca...<br>📍 Lima – 31 de octubre 2025<br>🎶 2 zonas musicales: Electrónica & Pachanga<br>🔥 👉 Lo que viene no es normal.",
+        date: "31 de octubre, 2025",
+        location: "Paradiso Lima - Club Cultural Chorrillos",
+        image: "img/eventos/evento-3.webp",
+        category: "música",
         tickets: [
-            { type: "General", price: 30.00, description: "Asiento general." },
-            { type: "VIP", price: 75.00, description: "Asiento preferencial y bebida de cortesía." }
+            { type: "BUBUX", price: 50.00, description: "" },
+            { type: "VIP", price: 60.00, description: "" },
         ]
     },
     {
         id: 4,
-        title: "Exposición de Arte Contemporáneo",
-        date: "12 de Octubre, 2024",
-        location: "Galería de Arte Moderno",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmTzcI_ElZuOahzb1wbZTP14CwYEgDBPKpuRf2nETlzNH5mG9xA2aDQp1W8zJRxVJXT713HEsQuFwRbmF0rHD2at063J6Md481CuRts1jQAWNsb-YcX9w7Vgz1Gi4QEueWTMnt_kl2MPhx2MXh18uVBGXi8GPHEs9vttENF9KqBKLomByi3HnarfAkLLwgCWmETQhmKpXHPxKnLboTKKwr2fLVIrUAQZ3aDrNIXAAs3HjEjM1cFvQYMterKAnI_5AH4f8xyxkK4ws",
-        category: "arte",
+        title: "HALLOWEEN MANSION",
+        description: "QUINTA EDICIÓN 31.10.2025<br>📍 TOURICAMP",
+        date: "31 de Octubre, 2025",
+        location: "Touricamp",
+        image: "img/eventos/evento-4.webp",
+        category: "música",
         tickets: [
-            { type: "Entrada General", price: 20.00, description: "Acceso a todas las exhibiciones." },
-            { type: "Visita Guiada", price: 35.00, description: "Acceso y tour guiado." }
+            { type: "GENERAL", price: 60.00, description: "" },
+            { type: "VIP", price: 130.00, description: "" },
+        ]
+    },
+    {
+        id: 5,
+        title: "PAUL VANDYK",
+        description: "📣¡𝗣𝗔𝗨𝗟 VAN DYK REGRESA A LIMA!🌌 Desde Berlín, llega el maestro que revolucionó la música electrónica, el ícono que marcó generaciones y escribió la historia del trance en cada escenario del planeta está de regreso con su tour “THIS WORLD IS OURS” 🎶🔥<br>🎧El DJ y productor alemán @paulvandyk llega a Lima el próximo viernes 14 de Noviembre para un viaje sonoro cargado de energía de inicio a fin 🔊",
+        date: "14 de noviembre, 2025",
+        location: "CC. Scencia",
+        image: "img/eventos/evento-5.jpg",
+        category: "música",
+        tickets: [
+            { type: "GENERAL 10PM", price: 100.00, description: "" },
+            { type: "GENERAL", price: 134.00, description: "" },
+            { type: "SUPERVIP", price: 224.00, description: "" },
+            { type: "DJ BOOTH", price: 314.00, description: "" },
+        ]
+    },
+    {
+        id: 6,
+        title: "BORIS BREJCHA",
+        description: "🎭 Boris Brejcha, uno de los referentes más importantes de la escena electrónica global regresa a Lima con su show Reflections.<br>El pionero del high-tech minimal y fundador del sello Fckng Serious, presentará un show exclusivo en Paradiso Lima, con producción de primer nivel y una experiencia sonora inmersiva.<br>Lo acompañarán Moritz Hofbauer y el dúo Frieder & Jakob, también de la familia Fckng Serious.",
+        date: "12 de diciembre, 2025",
+        location: "Paradiso Lima - Club Cultural Chorrillos",
+        image: "img/eventos/evento-6.jpg",
+        category: "música",
+        tickets: [
+            { type: "GENERAL 11PM", price: 150.00, description: "" },
+            { type: "GENERAL ALL DAY", price: 170.00, description: "" },
+            { type: "VIP", price: 240.00, description: "" },
+            { type: "PALCO ULTRA VIP", price: 340.00, description: "" },
         ]
     }
 ];
