@@ -1,6 +1,15 @@
 import { events } from '../data/events.js';
 
 export function createEventCard(event) {
+    const whatsappButtonHtml = event.whatsappGroupUrl ? `
+        <a href="${event.whatsappGroupUrl}" target="_blank" class="mt-2 w-full flex items-center justify-center rounded-lg h-10 px-4 bg-green-500 text-white text-sm font-bold leading-normal tracking-wide hover:bg-green-600 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.586-1.459l-6.323 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.731 6.086l.474.852-1.107 4.054 4.144-1.085.826.495z"></path>
+            </svg>
+            <span class="truncate">Unirse a Grupo de WhatsApp</span>
+        </a>
+    ` : '';
+
     return `
         <div class="group flex flex-col overflow-hidden rounded-lg bg-white/5 dark:bg-white/5 shadow-lg hover:shadow-primary/50 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
             <div class="image-container">
@@ -33,6 +42,7 @@ export function createEventCard(event) {
                 >
                     <span class="truncate">Ver Detalles</span>
                 </button>
+                ${whatsappButtonHtml}
             </div>
         </div>
     `;
@@ -102,6 +112,7 @@ function handleEventClick(eventId) {
             </div>
         `;
         modalTicketTypes.innerHTML += ticketHtml;
+        console.log('Generated ticket HTML:', ticketHtml);
     });
 
     const phoneNumber = "51968424445";

@@ -19,6 +19,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+
+
 .ticket-bg {
     background-image: radial-gradient(circle at 100% 0,
             rgba(255, 255, 255, 0.05) 5%,
@@ -70,4 +72,94 @@ body {
 
 #imageModal {
     transition: opacity 0.3s ease;
+}
+
+#ticketModal.is-active {
+    display: flex !important;
+    opacity: 1;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+/* Carousel Styles */
+#carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    flex: 0 0 calc(100% / 5); /* 5 images per page by default */
+    box-sizing: border-box;
+    padding: 0 0.5rem; /* Adjusted padding */
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 30rem; /* Increased height for better visibility */
+    object-fit: contain;
+    object-position: center;
+}
+
+#carousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+#carousel-prev,
+#carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+}
+
+#carousel-prev {
+    left: 10px;
+}
+
+#carousel-next {
+    right: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .carousel-slide {
+        flex: 0 0 calc(100% / 4); /* 4 images per page on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-slide {
+        flex: 0 0 calc(100% / 3); /* 3 images per page on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-slide {
+        flex: 0 0 100%; /* 1 image per page on extra small screens */
+    }
+}
+
+/* Who I Am Section Styles */
+#who-iam-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    #who-iam-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 1024px) {
+    #who-iam-content {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }

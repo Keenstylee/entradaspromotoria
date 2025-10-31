@@ -1,16 +1,36 @@
 import { events } from './data/events.js';
 import { testimonials } from './data/testimonials.js';
+import { screens } from './data/screens.js';
 import { renderEvents } from './components/eventCard.js';
 import { renderTestimonials } from './components/testimonialCard.js';
+import { renderCarousel } from './components/carousel.js';
+import createWhoIamSection from './components/whoIam.js';
+
+function calculateScrollbarWidth() {
+    const scrollDiv = document.createElement('div');
+    scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;';
+    document.body.appendChild(scrollDiv);
+    const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+    document.body.removeChild(scrollDiv);
+    document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+}
 
 function initApp() {
     console.log('🎫 Web-Eventos - Inicializando aplicación...');
     
+    calculateScrollbarWidth();
+
     renderEvents(events, 'events-grid');
     console.log(`✅ ${events.length} eventos cargados`);
     
     renderTestimonials(testimonials, 'testimonials-grid');
     console.log(`✅ ${testimonials.length} testimonios cargados`);
+
+    renderCarousel(screens, 'carousel-container', 'carousel-track', 'carousel-prev', 'carousel-next');
+    console.log(`✅ ${screens.length} capturas de ventas cargadas en el carrusel`);
+
+    createWhoIamSection();
+    console.log('✅ Sección Quien Soy cargada');
     
     initHeaderInteractions();
     initImageModal();
@@ -23,7 +43,6 @@ function initHeaderInteractions() {
     if (searchBtn) {
         searchBtn.addEventListener('click', () => {
             console.log('🔍 Búsqueda activada');
-            // Aquí puedes implementar la lógica de búsqueda
         });
     }
     
@@ -38,7 +57,6 @@ function initHeaderInteractions() {
     if (accountBtn) {
         accountBtn.addEventListener('click', () => {
             console.log('👤 Cuenta activada');
-            // Aquí puedes implementar la lógica de cuenta de usuario
         });
     }
 }
