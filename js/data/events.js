@@ -18,7 +18,8 @@ export const events = [
     category: "música",
     tickets: [
       { type: "GENERAL", price: 140.0, description: "" },
-      { type: "VIP", price: 280.0, description: "" }
+      { type: "VIP", price: 280.0, description: "" },
+      { type: "DJ BOOTH", price: 420.0, description: "" },
     ],
     whatsappGroupUrl: "https://chat.whatsapp.com/FSqdcANzG6WGXbipiu9rRo",
     badges: ["Próximo", "Sunset Open Air", "Headliner"],
@@ -46,6 +47,67 @@ export const events = [
       { title: "Korolova — set recomendado", url: "https://www.youtube.com/watch?v=c7Gzu83cLQU" }
     ]
   },
+
+  {
+    id: 6,
+    title: "BORIS BREJCHA",
+    description:
+      "🎭 Boris Brejcha, uno de los referentes más importantes de la escena electrónica global regresa a Lima con su show Reflections.<br>El pionero del high-tech minimal y fundador del sello Fckng Serious, presentará un show exclusivo en Paradiso Lima, con producción de primer nivel y una experiencia sonora inmersiva.<br>Lo acompañarán Moritz Hofbauer y el dúo Frieder & Jakob, también de la familia Fckng Serious.",
+    date: "12 de diciembre, 2025",
+    location: "Paradiso Lima - Club Cultural Chorrillos",
+    image: "img/eventos/evento-6.jpg",
+    category: "música",
+    tickets: [
+      { type: "GENERAL 11PM", price: 150.0, description: "" },
+      { type: "GENERAL ALL DAY", price: 170.0, description: "" },
+      { type: "VIP", price: 240.0, description: "" },
+      { type: "PALCO ULTRA VIP", price: 340.0, description: "" }
+    ],
+    whatsappGroupUrl: "https://chat.whatsapp.com/GQFKKNLr5a614OFhy7HKk8",
+    badges: ["Próximo", "Tour"],
+    youtube: "https://www.youtube.com/watch?v=DCGKemPaScw&list=RDDCGKemPaScw&start_radio=1"
+  },
+
+ {
+    id: 5,
+    title: "PAUL VANDYK",
+    description:
+      "📣¡𝗣𝗔𝗨𝗟 VAN DYK REGRESA A LIMA!🌌 Desde Berlín, llega el maestro que revolucionó la música electrónica, el ícono que marcó generaciones y escribió la historia del trance en cada escenario del planeta está de regreso con su tour “THIS WORLD IS OURS” 🎶🔥<br>🎧El DJ y productor alemán @paulvandyk llega a Lima el próximo viernes 14 de Noviembre para un viaje sonoro cargado de energía de inicio a fin 🔊",
+    date: "14 de noviembre, 2025",
+    location: "CC. Scencia",
+    image: "img/eventos/evento-5.jpg",
+    category: "música",
+    tickets: [
+      { type: "GENERAL 10PM", price: 100.0, description: "" },
+      { type: "GENERAL", price: 134.0, description: "" },
+      { type: "SUPERVIP", price: 224.0, description: "" },
+      { type: "DJ BOOTH", price: 314.0, description: "" }
+    ],
+    whatsappGroupUrl: "https://chat.whatsapp.com/GQFKKNLr5a614OFhy7HKk8",
+    badges: ["Próximo", "Headliner"],
+    youtube: "https://www.youtube.com/watch?v=55ywi-j2vhU"
+  },
+
+
+ {
+  id: 8,
+  title: "KYGO",
+  description:
+    "📣 ¡KYGO regresa a Lima para su gira mundial! 🌌 Vive una experiencia musical única el 14 de marzo de 2026 en Costa 21, con sonido envolvente, visuales de alto nivel y los himnos que han marcado generaciones.<br><br>🎧 Uno de los artistas más influyentes del tropical house, listo para hacer vibrar la costa limeña. 🔊",
+  date: "14 de marzo, 2026",
+  location: "Costa 21, San Miguel – Lima",
+  image: "img/eventos/evento-8.jpg",
+  category: "música",
+  tickets: [
+    { type: "GENERAL", price: 153.0, description: "" },
+    { type: "VIP", price: 300.0, description: "" },
+  ],
+  whatsappGroupUrl: "https://chat.whatsapp.com/EpXoZhgvuSGHYh69zMIpUR", 
+  badges: ["Próximo", "Headliner"],
+  youtube: "https://www.youtube.com/watch?v=EzjVN4xyQNQ"
+},
+
+
 
   {
     id: 3,
@@ -82,45 +144,6 @@ export const events = [
     youtube: "https://www.youtube.com/watch?v=rxoWDnWJwPQ&list=RDrxoWDnWJwPQ&start_radio=1"
   },
 
-  {
-    id: 5,
-    title: "PAUL VANDYK",
-    description:
-      "📣¡𝗣𝗔𝗨𝗟 VAN DYK REGRESA A LIMA!🌌 Desde Berlín, llega el maestro que revolucionó la música electrónica, el ícono que marcó generaciones y escribió la historia del trance en cada escenario del planeta está de regreso con su tour “THIS WORLD IS OURS” 🎶🔥<br>🎧El DJ y productor alemán @paulvandyk llega a Lima el próximo viernes 14 de Noviembre para un viaje sonoro cargado de energía de inicio a fin 🔊",
-    date: "14 de noviembre, 2025",
-    location: "CC. Scencia",
-    image: "img/eventos/evento-5.jpg",
-    category: "música",
-    tickets: [
-      { type: "GENERAL 10PM", price: 100.0, description: "" },
-      { type: "GENERAL", price: 134.0, description: "" },
-      { type: "SUPERVIP", price: 224.0, description: "" },
-      { type: "DJ BOOTH", price: 314.0, description: "" }
-    ],
-    whatsappGroupUrl: "https://chat.whatsapp.com/GQFKKNLr5a614OFhy7HKk8",
-    badges: ["Próximo", "Headliner"],
-    youtube: "https://www.youtube.com/watch?v=55ywi-j2vhU"
-  },
-
-  {
-    id: 6,
-    title: "BORIS BREJCHA",
-    description:
-      "🎭 Boris Brejcha, uno de los referentes más importantes de la escena electrónica global regresa a Lima con su show Reflections.<br>El pionero del high-tech minimal y fundador del sello Fckng Serious, presentará un show exclusivo en Paradiso Lima, con producción de primer nivel y una experiencia sonora inmersiva.<br>Lo acompañarán Moritz Hofbauer y el dúo Frieder & Jakob, también de la familia Fckng Serious.",
-    date: "12 de diciembre, 2025",
-    location: "Paradiso Lima - Club Cultural Chorrillos",
-    image: "img/eventos/evento-6.jpg",
-    category: "música",
-    tickets: [
-      { type: "GENERAL 11PM", price: 150.0, description: "" },
-      { type: "GENERAL ALL DAY", price: 170.0, description: "" },
-      { type: "VIP", price: 240.0, description: "" },
-      { type: "PALCO ULTRA VIP", price: 340.0, description: "" }
-    ],
-    whatsappGroupUrl: "https://chat.whatsapp.com/GQFKKNLr5a614OFhy7HKk8",
-    badges: ["Próximo", "Tour"],
-    youtube: "https://www.youtube.com/watch?v=DCGKemPaScw&list=RDDCGKemPaScw&start_radio=1"
-  },
 
   {
     id: 7,
@@ -141,4 +164,5 @@ export const events = [
     badges: ["Finalizado", "Halloween"],
     youtube: "https://www.youtube.com/watch?v=SizT9GqDIcc&list=RDSizT9GqDIcc&start_radio=1"
   }
+  
 ];

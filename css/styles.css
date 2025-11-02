@@ -1,7 +1,4 @@
-/*
-* Prefijos de-webkit- y -moz- para una mejor compatibilidad con los navegadores.
-*/
-
+/* Prefijos de-webkit- y -moz- para una mejor compatibilidad con los navegadores */
 * {
     scroll-behavior: smooth;
 }
@@ -18,8 +15,6 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
-
 
 .ticket-bg {
     background-image: radial-gradient(circle at 100% 0,
@@ -162,10 +157,9 @@ body {
     #who-iam-content {
         grid-template-columns: 1fr 1fr 1fr;
     }
-
 }
 
-/* ===== Glow suave para el badge "Hoy" ===== */
+/* Glow suave para el badge "Hoy" */
 @keyframes glowPulseBadge {
   0% {
     box-shadow:
@@ -211,7 +205,7 @@ body {
   }
 }
 
-/* ===== Glow amarillo dinámico para "Hoy" ===== */
+/* Glow amarillo dinámico para "Hoy" */
 @keyframes glowPulseBadge {
   0% {
     box-shadow:
@@ -244,7 +238,7 @@ body {
   animation: glowPulseBadge 1.8s ease-in-out infinite;
 }
 
-/* ===== Glow verde suave para "Próximo evento" ===== */
+/* Glow verde suave para "Próximo evento" */
 .badge-glow-green {
   box-shadow: 0 0 12px 4px rgba(34, 197, 94, 0.45); /* Tailwind green-500 */
 }
@@ -256,7 +250,7 @@ body {
   }
 }
 
-/* ===== Fondo carrusel para HERO ===== */
+/* Fondo carrusel para HERO */
 #hero { min-height: 350px; }
 
 #hero-bg { position: absolute; inset: 0; overflow: hidden; }
@@ -285,6 +279,7 @@ body {
   .hero-slide { transition: opacity 0.001s linear; transform: none; }
   #hero-bg:hover .hero-slide.active { transform: none; }
 }
+
 /* HERO */
 #hero { min-height: 100px; }
 #hero-bg { position: absolute; inset: 0; overflow: hidden; }
@@ -300,4 +295,26 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-slide { transition: opacity 0.001s linear; transform: none; }
+}
+
+/* ----- Estilos para el scroll en el modal ----- */
+#ticketModalPanel {
+  max-height: 80vh;
+  overflow-y: auto; /* Agrega el scroll solo en el eje Y (vertical) */
+  overflow-x: hidden; /* Desactiva el scroll horizontal */
+  padding-right: 10px; /* Espacio para el scrollbar */
+}
+
+/* Scroll delgado para el modal */
+#ticketModalPanel::-webkit-scrollbar {
+  width: 6px;
+}
+
+#ticketModalPanel::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+#ticketModalPanel::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.8);
 }
