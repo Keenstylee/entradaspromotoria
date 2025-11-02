@@ -1,5 +1,6 @@
 import { events } from '../data/events.js';
 
+// 🧩 Generador de tarjetas de eventos
 export function createEventCard(event) {
     const whatsappButtonHtml = event.whatsappGroupUrl ? `
         <a href="${event.whatsappGroupUrl}" target="_blank" class="mt-2 w-full flex items-center justify-center rounded-lg h-10 px-4 bg-green-500 text-white text-sm font-bold leading-normal tracking-wide hover:bg-green-600 transition-colors">
@@ -11,7 +12,8 @@ export function createEventCard(event) {
     ` : '';
 
     return `
-        <div class="group flex flex-col overflow-hidden rounded-lg bg-white/5 dark:bg-white/5 shadow-lg hover:shadow-primary/50 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+        <div class="group flex flex-col overflow-hidden rounded-lg bg-white/5 dark:bg-white/5 shadow-lg hover:shadow-primary/50 transition-all duration-300 ease-in-out transform hover:-translate-y-1 relative">
+            ${renderBadgesForDate(event.date)}
             <div class="image-container">
                 <img 
                     alt="${event.title}" 
@@ -24,9 +26,7 @@ export function createEventCard(event) {
                 </button>
             </div>
             <div class="p-4 flex flex-col flex-grow bg-background-light dark:bg-background-dark">
-                <h3 class="text-lg font-bold text-black dark:text-white mb-2">
-                    ${event.title}
-                </h3>
+                <h3 class="text-lg font-bold text-black dark:text-white mb-2">${event.title}</h3>
                 <p class="text-sm text-black/60 dark:text-white/60 mb-2">${event.description}</p>
                 <p class="text-sm text-black/60 dark:text-white/60 flex items-center gap-2 mb-4">
                     <span class="material-symbols-outlined text-base">calendar_today</span>
@@ -48,40 +48,73 @@ export function createEventCard(event) {
     `;
 }
 
+// 🟢 Renderiza todas las tarjetas
 export function renderEvents(events, containerId) {
     const container = document.getElementById(containerId);
-    
     if (!container) {
         console.error(`Container with id "${containerId}" not found`);
         return;
     }
-    
     container.innerHTML = '';
-
-    events.forEach(event => {
-        container.innerHTML += createEventCard(event);
-    });
-    
+    events.forEach(event => container.innerHTML += createEventCard(event));
     attachEventListeners(container);
 }
 
+// 🔖 Genera automáticamente el badge según la fecha del evento (con glow)
+function renderBadgesForDate(eventDateString) {
+    const now = new Date();
+    const eventDate = new Date(eventDateString.replace(/(\d{1,2}) de (\w+),? (\d{4})/, (m, day, month, year) => {
+        const months = {
+            enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
+            julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
+        };
+        return `${year}-${months[month.toLowerCase()] + 1}-${day}`;
+    }));
+
+    const diff = (eventDate - now) / (1000 * 60 * 60 * 24);
+    let badgeLabel = '';
+    let badgeColor = '';
+    let animationClass = '';
+    let glowClass = '';
+
+    if (diff < -0.5) {
+        badgeLabel = 'Finalizado';
+        badgeColor = 'bg-red-600';
+    } else if (Math.abs(diff) <= 0.5) {
+        badgeLabel = 'Hoy';
+        badgeColor = 'bg-yellow-500';
+        animationClass = 'animate-pulse';
+        glowClass = 'badge-glow';
+    } else {
+        badgeLabel = 'Próximo evento';
+        badgeColor = 'bg-green-600';
+        glowClass = 'badge-glow-green'; // 🌿 Nuevo glow verde suave
+    }
+
+    return `
+      <div class="absolute top-3 left-3 flex gap-2 z-10">
+        <span class="px-2 py-1 text-xs font-semibold rounded-full text-white shadow ${badgeColor} ${animationClass} ${glowClass}">
+          ${badgeLabel}
+        </span>
+      </div>
+    `;
+}
+
+// 🎟️ Control del modal y eventos
 function attachEventListeners(container) {
     const buttons = container.querySelectorAll('button[data-event-id]');
-    
     buttons.forEach(button => {
         button.addEventListener('click', (e) => {
             const eventId = e.currentTarget.dataset.eventId;
-            handleEventClick(parseInt(eventId)); // Parse eventId to integer
+            handleEventClick(parseInt(eventId));
         });
     });
 
-    // Attach event listener to close button
     const closeButton = document.querySelector('#ticketModal button');
-    if (closeButton) {
-        closeButton.addEventListener('click', closeTicketModal);
-    }
+    if (closeButton) closeButton.addEventListener('click', closeTicketModal);
 }
 
+// 🪪 Mostrar detalles del evento
 function handleEventClick(eventId) {
     const event = events.find(e => e.id === eventId);
     if (!event) {
@@ -98,9 +131,8 @@ function handleEventClick(eventId) {
     modalTicketTypes.innerHTML = '';
 
     event.tickets.forEach(ticket => {
-        const ticketHtml = `
-            <div
-                class="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-dashed border-white/20 hover:border-primary hover:bg-primary/10 transition-all duration-300">
+        modalTicketTypes.innerHTML += `
+            <div class="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-dashed border-white/20 hover:border-primary hover:bg-primary/10 transition-all duration-300">
                 <div class="flex items-center gap-4">
                     <span class="material-symbols-outlined text-primary text-3xl">confirmation_number</span>
                     <div>
@@ -108,11 +140,9 @@ function handleEventClick(eventId) {
                         <p class="text-sm text-white/60">${ticket.description}</p>
                     </div>
                 </div>
-                <span class="text-lg font-bold text-white">${ticket.price.toFixed(2)}</span>
+                <span class="text-lg font-bold text-white">S/ ${ticket.price.toFixed(2)}</span>
             </div>
         `;
-        modalTicketTypes.innerHTML += ticketHtml;
-        console.log('Generated ticket HTML:', ticketHtml);
     });
 
     const phoneNumber = "51968424445";
@@ -123,10 +153,9 @@ function handleEventClick(eventId) {
     modal.classList.add('is-active');
 }
 
+// ❌ Cierra el modal
 function closeTicketModal() {
     const modal = document.getElementById('ticketModal');
     modal.classList.remove('is-active');
-    setTimeout(() => {
-        modal.classList.add('hidden');
-    }, 300);
+    setTimeout(() => modal.classList.add('hidden'), 300);
 }

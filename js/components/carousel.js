@@ -21,6 +21,11 @@ export function renderCarousel(screens, containerId, trackId, prevButtonId, next
         return;
     }
 
+    // Asegurar foco para navegación por teclado
+    if (!container.hasAttribute('tabindex')) {
+        container.setAttribute('tabindex', '0');
+    }
+
     // Clear existing slides
     track.innerHTML = '';
 
@@ -38,10 +43,10 @@ export function renderCarousel(screens, containerId, trackId, prevButtonId, next
 
     const slides = Array.from(track.children);
     let currentIndex = numClones; // Start at the first actual slide
-    let slideWidth;
+    let slideWidth = 0;
 
     function getSlideWidth() {
-        return slides[0].getBoundingClientRect().width;
+        return slides[0]?.getBoundingClientRect().width || 0;
     }
 
     function updateCarousel(smooth = true) {
@@ -50,39 +55,83 @@ export function renderCarousel(screens, containerId, trackId, prevButtonId, next
         track.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
     }
 
-    // Initial positioning
-    updateCarousel(false);
+    // Movimiento básico
+    function goNext({ smooth = true } = {}) {
+        if (currentIndex >= screens.length + numClones - 1) {
+            currentIndex = numClones - 1; // saltar al inicio real - 1
+            updateCarousel(false);
+        }
+        currentIndex++;
+        updateCarousel(smooth);
+    }
 
-    prevButton.addEventListener('click', () => {
+    function goPrev({ smooth = true } = {}) {
         if (currentIndex <= 0) {
-            currentIndex = screens.length + numClones; // Jump to the end of the real slides + clones
+            currentIndex = screens.length + numClones; // saltar al final real + clones
             updateCarousel(false);
         }
         currentIndex--;
-        updateCarousel();
+        updateCarousel(smooth);
+    }
+
+    // Initial positioning
+    updateCarousel(false);
+
+    // Controles de botones
+    prevButton.addEventListener('click', () => goPrev());
+    nextButton.addEventListener('click', () => goNext());
+
+    // ---- Autoplay con control ----
+    const INTERVAL_MS = 4500;
+    let autoplayId = null;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function startAutoplay() {
+        if (autoplayId || prefersReducedMotion) return;
+        autoplayId = setInterval(() => {
+            goNext();
+        }, INTERVAL_MS);
+    }
+
+    function stopAutoplay() {
+        if (autoplayId) {
+            clearInterval(autoplayId);
+            autoplayId = null;
+        }
+    }
+
+    // Pausa al pasar mouse / tener foco / pestaña oculta
+    container.addEventListener('mouseenter', stopAutoplay);
+    container.addEventListener('mouseleave', startAutoplay);
+    container.addEventListener('focusin', stopAutoplay);
+    container.addEventListener('focusout', startAutoplay);
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAutoplay();
+        } else {
+            startAutoplay();
+        }
     });
 
-    nextButton.addEventListener('click', () => {
-        if (currentIndex >= screens.length + numClones - 1) {
-            currentIndex = numClones - 1; // Jump to the beginning of the real slides - 1
-            updateCarousel(false);
+    // Navegación por teclado
+    container.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            stopAutoplay();
+            goPrev();
+        } else if (e.key === 'ArrowRight') {
+            stopAutoplay();
+            goNext();
         }
-        currentIndex++;
-        updateCarousel();
     });
 
-    // Auto-play carousel
-    setInterval(() => {
-        if (currentIndex >= screens.length + numClones - 1) {
-            currentIndex = numClones - 1;
-            updateCarousel(false);
-        }
-        currentIndex++;
-        updateCarousel();
-    }, 3000); // Change slide every 3 seconds
-
-    // Adjust carousel on window resize
+    // Ajuste en resize
     window.addEventListener('resize', () => {
+        // Recalcular ancho y reposicionar sin animación
         updateCarousel(false);
     });
+
+    // Iniciar autoplay si procede
+    startAutoplay();
 }
