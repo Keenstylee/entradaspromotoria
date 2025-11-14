@@ -29,4 +29,8 @@ export const screens = [
     { id: 24, image: "img/capturas/cap28.jpeg" },
     { id: 24, image: "img/capturas/cap29.jpeg" },
     { id: 24, image: "img/capturas/cap30.jpeg" },
+    { id: 24, image: "img/capturas/cap31.jpg" },
+    { id: 24, image: "img/capturas/cap32.jpg" },
+    { id: 24, image: "img/capturas/cap33.jpg" },
+    { id: 24, image: "img/capturas/cap34.jpg" },
 ];
