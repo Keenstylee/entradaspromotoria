@@ -17,7 +17,7 @@ export const events = [
     image: "img/eventos/evento-1.jpg",
     category: "música",
     tickets: [
-      { type: "GENERAL", price: 150.0, description: "" },
+      { type: "GENERAL", price: 130.0, description: "" },
       { type: "VIP", price: 280.0, description: "" },
       { type: "DJ BOOTH", price: 420.0, description: "" },
     ],
