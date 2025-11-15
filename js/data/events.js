@@ -12,7 +12,7 @@ export const events = [
     title: "CARLCOX",
     description:
       "¡El rey está de regreso! 👑<br><br>CarlCox se apodera de nuestra ciudad este 16 de noviembre para nuestro primer sunset open air en Paradiso Perú.<br>Un viaje sonoro comandado por la leyenda más grande del techno.🔥",
-    date: "15 de noviembre, 2025",
+    date: "16 de noviembre, 2025",
     location: "Paradiso Lima",
     image: "img/eventos/evento-1.jpg",
     category: "música",
