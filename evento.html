@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Detalle del evento | Web-Eventos</title>
+
+    <!-- Favicon emoji (versión segura / escapada) -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎟️%3C/text%3E%3C/svg%3E"
+    >
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script>
+      // Pequeña config defensiva para el CDN
+      window.tailwind = { config: { future: {} } };
+    </script>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#5b13ec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#161022",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Estilos extra suaves -->
+    <style>
+      .badge-pill {
+        box-shadow: 0 0 20px rgba(91, 19, 236, 0.4);
+      }
+      .detail-card {
+        background:
+          radial-gradient(circle at top left, rgba(91, 19, 236, 0.25), transparent 55%),
+          radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.06), transparent 55%),
+          #161022;
+      }
+      .detail-bg {
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+    </style>
+  </head>
+
+  <body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative min-h-screen">
+      <!-- Fondo de textura -->
+      <div class="absolute inset-0 detail-bg opacity-40 pointer-events-none"></div>
+
+      <div class="relative z-10 flex flex-col min-h-screen">
+        <!-- HEADER (igual al index, pero links a index.html#... ) -->
+        <header
+          class="sticky top-0 z-20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm"
+          role="banner"
+        >
+          <div
+            class="container mx-auto flex items-center justify-between whitespace-nowrap px-4 sm:px-6 lg:px-8 py-3 border-b border-white/10 dark:border-white/10"
+          >
+            <!-- Marca principal -->
+            <div class="flex items-center gap-8">
+              <div class="flex items-center gap-3 text-black dark:text-white">
+                <!-- Imagen de perfil -->
+                <img
+                  src="img/perfil/keenfest.JPEG"
+                  alt="Keenfest"
+                  class="h-9 w-9 rounded-full ring-2 ring-primary/40 object-cover"
+                />
+
+                <!-- Nombre y verificación -->
+                <div class="flex items-center gap-3">
+                  <h1
+                    class="text-base sm:text-lg font-extrabold tracking-tight flex items-center gap-1"
+                  >
+                    Keenfest
+                  </h1>
+
+                  <!-- Recuadro de verificación -->
+                  <div
+                    class="flex items-center gap-1 px-2 py-1 rounded-full bg-green-600/20 text-green-400 text-xs sm:text-sm font-semibold"
+                  >
+                    <span class="material-symbols-outlined text-base">verified</span>
+                    Promotor autorizado
+                  </div>
+                </div>
+              </div>
+
+              <!-- Navegación -->
+              <nav class="hidden md:flex items-center gap-6" aria-label="Principal">
+                <a
+                  class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors"
+                  href="index.html#eventos"
+                  >Eventos</a
+                >
+                <a
+                  class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors"
+                  href="index.html#testimonios"
+                  >Testimonios</a
+                >
+                <a
+                  class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors"
+                  href="index.html#pruebas"
+                  >Pruebas</a
+                >
+                <a
+                  class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors"
+                  href="index.html#quien-soy"
+                  >Quién soy</a
+                >
+              </nav>
+            </div>
+
+            <!-- CTA WhatsApp + menú móvil -->
+            <div class="flex items-center gap-3">
+              <a
+                href="https://wa.me/51968424445?text=Hola%2C%20quiero%20entradas%20con%20descuento"
+                class="hidden sm:inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-green-500 text-white font-bold hover:bg-green-600 transition"
+                aria-label="Chatear por WhatsApp"
+              >
+                <span class="material-symbols-outlined text-base">chat</span> WhatsApp
+              </a>
+
+              <button
+                id="mobile-menu-toggle"
+                class="md:hidden inline-flex items-center justify-center rounded-lg h-10 w-10 text-black dark:text-white hover:bg-white/10"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+              >
+                <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+                <span class="sr-only">Abrir menú</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Menú móvil -->
+          <nav
+            id="mobile-menu"
+            class="hidden md:hidden border-b border-white/10 bg-background-light dark:bg-background-dark"
+            aria-label="Móvil"
+          >
+            <div class="px-4 py-3 flex flex-col gap-2">
+              <a
+                class="py-2 text-sm font-medium text-black dark:text-white hover:text-primary rounded"
+                href="index.html#eventos"
+                >Eventos</a
+              >
+              <a
+                class="py-2 text-sm font-medium text-black dark:text-white hover:text-primary rounded"
+                href="index.html#testimonios"
+                >Testimonios</a
+              >
+              <a
+                class="py-2 text-sm font-medium text-black dark:text-white hover:text-primary rounded"
+                href="index.html#pruebas"
+                >Pruebas</a
+              >
+              <a
+                class="py-2 text-sm font-medium text-black dark:text-white hover:text-primary rounded"
+                href="index.html#quien-soy"
+                >Quién soy</a
+              >
+              <a
+                class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-green-500 text-white font-bold hover:bg-green-600 transition mt-2"
+                href="https://wa.me/51968424445?text=Hola%2C%20quiero%20entradas%20con%20descuento"
+              >
+                <span class="material-symbols-outlined text-base">chat</span> WhatsApp
+              </a>
+            </div>
+          </nav>
+        </header>
+
+        <!-- MAIN -->
+        <main
+          id="main"
+          role="main"
+          class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow"
+        >
+          <!-- Contenedor donde se pintará el evento -->
+          <div id="evento-root"></div>
+        </main>
+
+        <!-- FOOTER (igual al index) -->
+        <footer
+          class="bg-background-dark/80 backdrop-blur-sm mt-auto relative ticket-bg border-t border-white/10"
+          role="contentinfo"
+        >
+          <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-white/70">
+              <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-2 text-white mb-4">
+                  <span class="material-symbols-outlined text-primary text-3xl"
+                    >confirmation_number</span
+                  >
+                  <h2 class="text-xl font-bold">WEB-EVENTOS</h2>
+                </div>
+                <p class="text-sm max-w-md">
+                  Tu acceso a eventos con entradas oficiales y beneficios especiales. ¡No te
+                  pierdas ni un momento!
+                </p>
+              </div>
+              <div>
+                <h4 class="text-lg font-bold text-white mb-4">Contacto</h4>
+                <ul class="space-y-2 text-sm">
+                  <li>
+                    <a
+                      class="hover:text-primary transition-colors flex items-center gap-2"
+                      href="mailto:Keenfest.pe@gmail.com"
+                      ><span class="material-symbols-outlined text-base">email</span
+                      >Keenfest.pe@gmail.com</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="hover:text-primary transition-colors flex items-center gap-2"
+                      href="tel:+51968424445"
+                      ><span class="material-symbols-outlined text-base">phone</span>+51
+                      968424445</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="hover:text-primary transition-colors flex items-center gap-2"
+                      href="#"
+                      ><span class="material-symbols-outlined text-base">location_on</span
+                      >123 Calle Falsa, Ciudad Gótica</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-lg font-bold text-white mb-4">Redes Sociales</h4>
+                <div class="flex space-x-4">
+                  <a
+                    class="text-white/70 hover:text-primary transition-colors"
+                    href="https://www.instagram.com/keenfest/?hl=es"
+                    target="_blank"
+                    aria-label="Instagram"
+                  >
+                    <svg
+                      class="w-6 h-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.07 4.85-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM18.406 6.318a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88zM12 7.838A4.162 4.162 0 1 0 16.162 12 4.167 4.167 0 0 0 12 7.838z"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    class="text-white/70 hover:text-primary transition-colors"
+                    href="https://www.tiktok.com/@keenfest"
+                    target="_blank"
+                    aria-label="TikTok"
+                  >
+                    <svg
+                      class="w-6 h-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="mt-8 pt-8 border-t border-white/10 text-center text-sm text-white/50"
+            >
+              <p>© 2025 Web-Eventos. Todos los derechos reservados.</p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Botón flotante WhatsApp -->
+    <a
+      href="https://wa.me/51968424445?text=Hola%2C%20quiero%20comprar%20entradas%20para%20un%20evento"
+      class="fixed z-50 bottom-4 right-4 group"
+      aria-label="Chatear por WhatsApp"
+    >
+      <div
+        class="h-14 w-14 rounded-full bg-green-500 flex items-center justify-center shadow-lg hover:scale-105 transition"
+      >
+        <svg viewBox="0 0 32 32" class="h-7 w-7 fill-white" aria-hidden="true">
+          <path
+            d="M19.11 17.64c-.27-.14-1.6-.79-1.85-.88s-.43-.14-.62.14-.71.88-.87 1.06-.32.2-.6.07a6.73 6.73 0 0 1-1.98-1.23 7.36 7.36 0 0 1-1.36-1.69c-.14-.24 0-.37.11-.5s.26-.31.39-.47.18-.27.27-.45a.52.52 0 0 0 0-.5c-.07-.14-.62-1.5-.85-2.05s-.45-.47-.62-.48h-.53a1 1 0 0 0-.74.35 3.13 3.13 0 0 0-.98 2.31 5.46 5.46 0 0 0 1.15 2.92 12.57 12.57 0 0 0 4.81 4.27 15.52 15.52 0 0 0 1.51.56 3.64 3.64 0 0 0 1.67.1 2.74 2.74 0 0 0 1.8-1.27 2.22 2.22 0 0 0 .15-1.27c-.06-.1-.25-.17-.52-.31z"
+          />
+          <path
+            d="M16 3a13 13 0 0 0-11 19.5L4 29l6.66-1.75A13 13 0 1 0 16 3zm7.69 20.69A10.9 10.9 0 0 1 10.92 26h-.09l-.17-.09-3.93 1 1-3.83-.12-.19a10.94 10.94 0 1 1 15.08 0z"
+          />
+        </svg>
+      </div>
+    </a>
+
+    <!-- LÓGICA DEL EVENTO -->
+    <script type="module">
+      import { events } from "./js/data/events.js";
+
+      // Helpers para YouTube (igual estilo que el modal)
+      const isStr = (v) => typeof v === "string" && v.trim().length > 0;
+      const isObj = (v) => v && typeof v === "object";
+
+      function toYouTubeEmbed(url) {
+        try {
+          const u = new URL(url);
+          if (u.hostname.includes("youtu.be")) {
+            const id = u.pathname.slice(1);
+            return id ? `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1` : url;
+          }
+          if (u.hostname.includes("youtube.com")) {
+            const v = u.searchParams.get("v");
+            if (v)
+              return `https://www.youtube.com/embed/${v}?rel=0&modestbranding=1`;
+            if (u.pathname.includes("/playlist") && u.searchParams.get("list")) {
+              return `https://www.youtube.com/embed/videoseries?list=${u.searchParams.get(
+                "list"
+              )}`;
+            }
+          }
+          return url;
+        } catch {
+          return url;
+        }
+      }
+
+      function normalizeYouTubeSources(youtubeProp) {
+        if (!youtubeProp) return [];
+        if (isStr(youtubeProp)) {
+          return [{ title: "YouTube 1", url: youtubeProp.trim() }];
+        }
+        if (Array.isArray(youtubeProp)) {
+          return youtubeProp
+            .map((it, i) => {
+              if (isStr(it)) return { title: `YouTube ${i + 1}`, url: it.trim() };
+              if (isObj(it) && isStr(it.url)) {
+                return {
+                  title: isStr(it.title) ? it.title.trim() : `YouTube ${i + 1}`,
+                  url: it.url.trim(),
+                };
+              }
+              return null;
+            })
+            .filter(Boolean);
+        }
+        if (isObj(youtubeProp) && isStr(youtubeProp.url)) {
+          return [
+            {
+              title: isStr(youtubeProp.title) ? youtubeProp.title.trim() : "YouTube 1",
+              url: youtubeProp.url.trim(),
+            },
+          ];
+        }
+        return [];
+      }
+
+      function buildBadgeHtml(eventDateString) {
+        const now = new Date();
+        const eventDate = new Date(
+          eventDateString.replace(
+            /(\d{1,2}) de (\w+),? (\d{4})/,
+            (m, day, month, year) => {
+              const months = {
+                enero: 0,
+                febrero: 1,
+                marzo: 2,
+                abril: 3,
+                mayo: 4,
+                junio: 5,
+                julio: 6,
+                agosto: 7,
+                septiembre: 8,
+                octubre: 9,
+                noviembre: 10,
+                diciembre: 11,
+              };
+              return `${year}-${String(months[month.toLowerCase()] + 1).padStart(
+                2,
+                "0"
+              )}-${String(day).padStart(2, "0")}`;
+            }
+          )
+        );
+
+        const diff = (eventDate - now) / (1000 * 60 * 60 * 24);
+        let badgeLabel = "";
+        let badgeColor = "";
+
+        if (diff < -0.5) {
+          badgeLabel = "Finalizado";
+          badgeColor = "bg-red-600";
+        } else if (Math.abs(diff) <= 0.5) {
+          badgeLabel = "Hoy";
+          badgeColor = "bg-yellow-500";
+        } else {
+          badgeLabel = "Próximo evento";
+          badgeColor = "bg-green-600";
+        }
+
+        return `
+          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold text-white ${badgeColor} badge-pill">
+            <span class="material-symbols-outlined text-base">event</span>
+            ${badgeLabel}
+          </span>
+        `;
+      }
+
+      function buildYouTubeBlock(ytItems) {
+        if (!ytItems.length) return "";
+
+        const first = ytItems[0];
+        const embed0 = toYouTubeEmbed(first.url);
+        const hasMultiple = ytItems.length > 1;
+
+        const tabs = hasMultiple
+          ? `
+            <div class="flex flex-wrap gap-2 mb-3" id="detail-video-tabs">
+              ${ytItems
+                .map(
+                  (item, i) => `
+                <button data-idx="${i}"
+                  class="tab-pill inline-flex items-center gap-1 px-3 py-1 rounded-full border border-white/20 text-white/80 hover:text-white hover:border-white/40 ${
+                    i === 0 ? "bg-white/10" : ""
+                  }">
+                  ${item.title || `YouTube ${i + 1}`}
+                </button>`
+                )
+                .join("")}
+            </div>`
+          : "";
+
+        return `
+          <div class="mt-8 space-y-3">
+            <h3 class="text-white font-bold flex items-center gap-2 text-lg">
+              <span class="material-symbols-outlined text-base text-primary">play_circle</span>
+              Mira un set del artista
+            </h3>
+            ${tabs}
+            <div class="relative w-full overflow-hidden rounded-lg border border-white/10 bg-black/40">
+              <div class="relative pt-[56.25%]">
+                <iframe
+                  id="detail-video"
+                  class="absolute inset-0 w-full h-full rounded-lg"
+                  src="${embed0}"
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+            <div>
+              <a href="${first.url}" target="_blank" rel="noopener"
+                 id="detail-video-open"
+                 class="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white underline decoration-white/30">
+                <span class="material-symbols-outlined text-base">open_in_new</span>
+                Ver en YouTube${first.title ? " — " + first.title : ""}
+              </a>
+            </div>
+          </div>
+        `;
+      }
+
+      function wireYouTubeTabs(ytItems) {
+        if (ytItems.length <= 1) return;
+        const tabs = document.querySelectorAll("#detail-video-tabs .tab-pill");
+        const iframe = document.getElementById("detail-video");
+        const open = document.getElementById("detail-video-open");
+        if (!tabs || !iframe || !open) return;
+
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            tabs.forEach((t) => t.classList.remove("bg-white/10"));
+            tab.classList.add("bg-white/10");
+            const idx = parseInt(tab.dataset.idx, 10) || 0;
+            const item = ytItems[idx];
+            iframe.src = toYouTubeEmbed(item.url);
+            open.href = item.url;
+            open.innerHTML = `
+              <span class="material-symbols-outlined text-base">open_in_new</span>
+              Ver en YouTube${item.title ? " — " + item.title : ""}
+            `;
+          });
+        });
+      }
+
+      // Leer id desde la URL
+      const params = new URLSearchParams(window.location.search);
+      const id = Number(params.get("id"));
+      const evento = events.find((e) => e.id === id);
+
+      const root = document.getElementById("evento-root");
+
+      if (!evento) {
+        root.innerHTML = `
+          <a href="index.html#eventos" class="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6">
+            <span class="material-symbols-outlined text-base">arrow_back</span>
+            Volver a todos los eventos
+          </a>
+          <div class="rounded-xl bg-red-900/40 border border-red-500/40 px-6 py-4 text-red-100 max-w-lg">
+            <p class="font-semibold text-lg mb-1">Evento no encontrado</p>
+            <p class="text-sm text-red-100/80">El enlace que abriste ya no es válido o el evento fue eliminado.</p>
+          </div>
+        `;
+      } else {
+        const ytItems = normalizeYouTubeSources(evento.youtube);
+        const badgeHtml = buildBadgeHtml(evento.date);
+        const youtubeHtml = buildYouTubeBlock(ytItems);
+
+        const whatsappMessage = encodeURIComponent(
+          `Hola, quiero entradas para el evento: ${evento.title} (${evento.date} en ${evento.location}).`
+        );
+        const whatsappLink = `https://wa.me/51968424445?text=${whatsappMessage}`;
+
+        root.innerHTML = `
+          <a href="index.html#eventos" class="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6">
+            <span class="material-symbols-outlined text-base">arrow_back</span>
+            Volver a todos los eventos
+          </a>
+
+          <section class="detail-card rounded-2xl border border-white/10 shadow-2xl shadow-primary/30 p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none opacity-40">
+              <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/30 rounded-full blur-3xl"></div>
+              <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl"></div>
+            </div>
+
+            <div class="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1.1fr)] items-start">
+              <!-- Columna izquierda: info principal -->
+              <div class="space-y-6">
+<div class="flex flex-wrap items-center gap-3">
+  ${badgeHtml}
+</div>
+
+                <div class="space-y-3">
+                  <h1 class="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                    ${evento.title}
+                  </h1>
+                  <p class="text-sm text-white/70 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base">calendar_today</span>
+                    ${evento.date}
+                  </p>
+                  <p class="text-sm text-white/70 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base">location_on</span>
+                    ${evento.location}
+                  </p>
+                </div>
+
+                <div class="relative rounded-xl overflow-hidden border border-white/15 bg-black/40">
+                  <img
+                    src="${evento.image}"
+                    alt="${evento.title}"
+                    class="w-full max-h-[420px] object-cover object-top"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="prose prose-invert max-w-none text-white/80 text-sm sm:text-base leading-relaxed">
+                  ${evento.description}
+                </div>
+
+                ${youtubeHtml}
+              </div>
+
+              <!-- Columna derecha: entradas + acciones -->
+              <aside class="relative bg-black/30 rounded-2xl border border-white/15 p-5 sm:p-6 space-y-6">
+                <div class="space-y-2">
+                  <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base text-primary">sell</span>
+                    Entradas disponibles
+                  </h2>
+                  <p class="text-xs text-white/60">
+                    Los precios pueden variar según la demanda. Escríbeme por WhatsApp para confirmar stock.
+                  </p>
+                </div>
+
+                <div class="space-y-3 max-h-[260px] overflow-y-auto pr-1" id="tickets-scroll">
+                  ${Array.isArray(evento.tickets)
+                    ? evento.tickets
+                        .map(
+                          (t) => `
+                      <div class="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-dashed border-white/20 hover:border-primary hover:bg-primary/10 transition-all duration-200">
+                        <div class="flex items-start gap-3">
+                          <span class="material-symbols-outlined text-primary text-2xl">confirmation_number</span>
+                          <div>
+                            <p class="font-semibold text-white text-sm">${t.type}</p>
+                            <p class="text-xs text-white/60">${t.description || ""}</p>
+                          </div>
+                        </div>
+                        <span class="text-base font-bold text-white whitespace-nowrap">
+                          ${
+                            typeof t.price === "number" && t.price > 0
+                              ? "S/ " + t.price.toFixed(2)
+                              : "Consultar"
+                          }
+                        </span>
+                      </div>
+                    `
+                        )
+                        .join("")
+                    : ""}
+                </div>
+
+ <div class="space-y-3">
+
+  <!-- Botón principal de compra -->
+  <a
+    href="${whatsappLink}"
+    target="_blank"
+    class="w-full flex items-center justify-center rounded-lg h-11 px-6 bg-green-500 text-white text-sm sm:text-base font-bold leading-normal tracking-wide hover:bg-green-600 transition-colors"
+  >
+    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c..."></path>
+    </svg>
+    Comprar entrada por WhatsApp
+  </a>
+
+  <!-- Botón para unirse al grupo -->
+  ${
+    evento.whatsappGroupUrl
+      ? `
+      <a
+        href="${evento.whatsappGroupUrl}"
+        target="_blank"
+        class="w-full flex items-center justify-center rounded-lg h-10 px-4 bg-green-500 text-white text-sm font-bold hover:bg-green-600 transition-colors"
+      >
+        <span class="material-symbols-outlined text-base mr-2">group</span>
+        Unirme al grupo oficial del evento
+      </a>`
+      : ""
+  }
+
+</div>
+
+              </aside>
+            </div>
+          </section>
+        `;
+
+        if (ytItems.length > 1) {
+          wireYouTubeTabs(ytItems);
+        }
+        }
+      
+
+      // Menú móvil también aquí
+      const btn = document.getElementById("mobile-menu-toggle");
+      const menu = document.getElementById("mobile-menu");
+      if (btn && menu) {
+        btn.addEventListener("click", () => {
+          const isHidden = menu.classList.toggle("hidden");
+          btn.setAttribute("aria-expanded", String(!isHidden));
+        });
+        menu.addEventListener("click", (e) => {
+          const link = e.target.closest("a");
+          if (!link) return;
+          if (!menu.classList.contains("hidden")) {
+            menu.classList.add("hidden");
+            btn.setAttribute("aria-expanded", "false");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

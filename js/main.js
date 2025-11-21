@@ -44,9 +44,6 @@ function initApp() {
   initImageModal();
   initMobileMenu();
 
-  // Expone cierre de modal a window para HTML onclick
-  window.closeTicketModal = closeTicketModal;
-
   console.log('🎉 Aplicación lista!');
 }
 
@@ -153,23 +150,6 @@ function renderHeroBackgroundCarousel(fromEvents, containerId = 'hero-bg', inter
     idx = (idx + 1) % slides.length;
     show(idx);
   }, intervalMs);
-}
-
-// ===== Cerrar modal de entradas + pausar YouTube =====
-function closeTicketModal() {
-  const modal = document.getElementById('ticketModal');
-  if (!modal) return;
-
-  // Oculta modal con la misma animación que usas en eventCard.js
-  modal.classList.remove('is-active');
-  // Limpia el iframe para pausar el video
-  const iframe = document.getElementById('modal-video');
-  if (iframe) iframe.src = '';
-
-  // Después de la transición, oculta completamente
-  setTimeout(() => {
-    modal.classList.add('hidden');
-  }, 300);
 }
 
 // ===== DOM Ready =====
