@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Detalle del evento | Web-Eventos</title>
 
-    <!-- Favicon emoji (versión segura / escapada) -->
+    <!-- Favicon emoji -->
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎟️%3C/text%3E%3C/svg%3E"
@@ -23,12 +23,10 @@
       rel="stylesheet"
     />
 
-    <!-- Tailwind -->
+    <!-- Config básica Tailwind -->
     <script>
-      // Pequeña config defensiva para el CDN
       window.tailwind = { config: { future: {} } };
     </script>
-
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script>
       tailwind.config = {
@@ -41,33 +39,55 @@
               "background-dark": "#161022",
             },
             fontFamily: {
-              display: ["Plus Jakarta Sans"],
-            },
-            borderRadius: {
-              DEFAULT: "0.25rem",
-              lg: "0.5rem",
-              xl: "0.75rem",
-              full: "9999px",
+              display: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
             },
           },
         },
       };
     </script>
 
-    <!-- Estilos extra suaves -->
+    <!-- Estilos adicionales -->
     <style>
-      .badge-pill {
-        box-shadow: 0 0 20px rgba(91, 19, 236, 0.4);
-      }
-      .detail-card {
-        background:
-          radial-gradient(circle at top left, rgba(91, 19, 236, 0.25), transparent 55%),
-          radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.06), transparent 55%),
-          #161022;
-      }
       .detail-bg {
         background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
       }
+
+      .detail-card {
+        background:
+          radial-gradient(circle at top left, rgba(91, 19, 236, 0.28), transparent 55%),
+          radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.06), transparent 55%),
+          #161022;
+        position: relative;
+      }
+
+      .detail-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 1rem;
+        padding: 1px;
+        background:
+          radial-gradient(circle at top left, rgba(91, 19, 236, 0.55), transparent),
+          radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.25), transparent);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0.45;
+        pointer-events: none;
+      }
+
+      .badge-pill {
+        box-shadow: 0 0 20px rgba(91, 19, 236, 0.45);
+      }
+
+      .tab-pill {
+        transition: all 0.2s ease;
+      }
+
+      .tab-pill:hover {
+        transform: translateY(-1px);
+      }
+
       .sr-only {
         position: absolute;
         width: 1px;
@@ -79,44 +99,61 @@
         white-space: nowrap;
         border-width: 0;
       }
+
+      /* Modal copiar código */
+      #modalCopiar {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+
+      #modalCopiarBox {
+        opacity: 0;
+        transform: scale(0.9) translateY(8px);
+        transition: all 0.28s ease;
+      }
+
+      #modalCopiar.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      #modalCopiar.show #modalCopiarBox {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     </style>
   </head>
 
-  <body class="bg-background-light dark:bg-background-dark font-display">
+<body class="bg-black text-white font-display">
     <div class="relative min-h-screen">
-      <!-- Fondo de textura -->
+      <!-- Fondo textura -->
       <div class="absolute inset-0 detail-bg opacity-40 pointer-events-none"></div>
 
-      <div class="relative z-10 flex flex-col min-h-screen">
-        <!-- HEADER (igual al index, pero links a index.html#... ) -->
+      <div class="relative z-10 flex min-h-screen flex-col">
+        <!-- HEADER -->
         <header
-          class="sticky top-0 z-20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm"
+          class="sticky top-0 z-20 border-b border-white/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm"
           role="banner"
         >
           <div
-            class="container mx-auto flex items-center justify-between whitespace-nowrap px-4 sm:px-6 lg:px-8 py-3 border-b border-white/10 dark:border-white/10"
+            class="container mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8"
           >
-            <!-- Marca principal -->
+            <!-- Marca + navegación -->
             <div class="flex items-center gap-8">
+              <!-- Marca -->
               <div class="flex items-center gap-3 text-black dark:text-white">
-                <!-- Imagen de perfil -->
                 <img
                   src="img/perfil/keenfest.JPEG"
                   alt="Keenfest"
-                  class="h-9 w-9 rounded-full ring-2 ring-primary/40 object-cover"
+                  class="h-9 w-9 rounded-full object-cover ring-2 ring-primary/40"
                 />
-
-                <!-- Nombre y verificación -->
                 <div class="flex items-center gap-3">
-                  <h1
-                    class="text-base sm:text-lg font-extrabold tracking-tight flex items-center gap-1"
-                  >
+                  <h1 class="flex items-center gap-1 text-base font-extrabold tracking-tight sm:text-lg">
                     Keenfest
                   </h1>
-
-                  <!-- Recuadro de verificación -->
                   <div
-                    class="flex items-center gap-1 px-2 py-1 rounded-full bg-green-600/20 text-green-400 text-xs sm:text-sm font-semibold"
+                    class="flex items-center gap-1 rounded-full bg-green-600/20 px-2 py-1 text-xs font-semibold text-green-400 sm:text-sm"
                   >
                     <span class="material-symbols-outlined text-base">verified</span>
                     Promotor autorizado
@@ -124,44 +161,49 @@
                 </div>
               </div>
 
-              <!-- Navegación -->
-              <nav class="hidden md:flex items-center gap-6" aria-label="Principal">
+              <!-- Nav desktop -->
+              <nav
+                class="hidden items-center gap-6 md:flex"
+                aria-label="Navegación principal"
+              >
                 <a
-                  class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors"
                   href="index.html#eventos"
+                  class="text-sm font-medium text-black/70 transition-colors hover:text-primary dark:text-white/70 dark:hover:text-primary"
                   >Eventos</a
                 >
                 <a
-                  class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors"
                   href="index.html#testimonios"
+                  class="text-sm font-medium text-black/70 transition-colors hover:text-primary dark:text-white/70 dark:hover:text-primary"
                   >Testimonios</a
                 >
                 <a
-                  class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors"
                   href="index.html#pruebas"
+                  class="text-sm font-medium text-black/70 transition-colors hover:text-primary dark:text-white/70 dark:hover:text-primary"
                   >Pruebas</a
                 >
                 <a
-                  class="text-sm font-medium text-black/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors"
                   href="index.html#quien-soy"
+                  class="text-sm font-medium text-black/70 transition-colors hover:text-primary dark:text-white/70 dark:hover:text-primary"
                   >Quién soy</a
                 >
               </nav>
             </div>
 
-            <!-- CTA WhatsApp + menú móvil -->
+            <!-- CTA + menú móvil -->
             <div class="flex items-center gap-3">
               <a
                 href="https://wa.me/51968424445?text=Hola%2C%20quiero%20entradas%20con%20descuento"
-                class="hidden sm:inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-green-500 text-white font-bold hover:bg-green-600 transition"
+                target="_blank"
+                class="hidden h-10 items-center gap-2 rounded-lg bg-green-500 px-4 font-bold text-white transition hover:bg-green-600 sm:inline-flex"
                 aria-label="Chatear por WhatsApp"
               >
-                <span class="material-symbols-outlined text-base">chat</span> WhatsApp
+                <span class="material-symbols-outlined text-base">chat</span>
+                WhatsApp
               </a>
 
               <button
                 id="mobile-menu-toggle"
-                class="md:hidden inline-flex items-center justify-center rounded-lg h-10 w-10 text-black dark:text-white hover:bg-white/10"
+                class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-black transition hover:bg-white/10 dark:text-white md:hidden"
                 aria-expanded="false"
                 aria-controls="mobile-menu"
               >
@@ -174,109 +216,113 @@
           <!-- Menú móvil -->
           <nav
             id="mobile-menu"
-            class="hidden md:hidden border-b border-white/10 bg-background-light dark:bg-background-dark"
-            aria-label="Móvil"
+            class="hidden border-t border-white/10 bg-background-light dark:bg-background-dark md:hidden"
+            aria-label="Navegación móvil"
           >
-            <div class="px-4 py-3 flex flex-col gap-2">
+            <div class="flex flex-col gap-1 px-4 py-3">
               <a
-                class="py-2 text-sm font-medium text-black dark:text-white hover:text-primary rounded"
                 href="index.html#eventos"
+                class="rounded px-1 py-2 text-sm font-medium text-black transition-colors hover:text-primary dark:text-white"
                 >Eventos</a
               >
               <a
-                class="py-2 text-sm font-medium text-black dark:text-white hover:text-primary rounded"
                 href="index.html#testimonios"
+                class="rounded px-1 py-2 text-sm font-medium text-black transition-colors hover:text-primary dark:text-white"
                 >Testimonios</a
               >
               <a
-                class="py-2 text-sm font-medium text-black dark:text-white hover:text-primary rounded"
                 href="index.html#pruebas"
+                class="rounded px-1 py-2 text-sm font-medium text-black transition-colors hover:text-primary dark:text-white"
                 >Pruebas</a
               >
               <a
-                class="py-2 text-sm font-medium text-black dark:text-white hover:text-primary rounded"
                 href="index.html#quien-soy"
+                class="rounded px-1 py-2 text-sm font-medium text-black transition-colors hover:text-primary dark:text-white"
                 >Quién soy</a
               >
               <a
-                class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-green-500 text-white font-bold hover:bg-green-600 transition mt-2"
                 href="https://wa.me/51968424445?text=Hola%2C%20quiero%20entradas%20con%20descuento"
+                target="_blank"
+                class="mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-green-500 px-4 font-bold text-white transition hover:bg-green-600"
               >
-                <span class="material-symbols-outlined text-base">chat</span> WhatsApp
+                <span class="material-symbols-outlined text-base">chat</span>
+                WhatsApp
               </a>
             </div>
           </nav>
         </header>
 
         <!-- MAIN -->
-        <main
-          id="main"
-          role="main"
-          class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow"
-        >
-          <!-- Contenedor donde se pintará el evento -->
+<main
+  id="main"
+  role="main"
+  class="container mx-auto flex-grow px-4 py-6 sm:px-6 lg:px-8"
+>
+
           <div id="evento-root"></div>
         </main>
 
-        <!-- FOOTER (igual al index) -->
+        <!-- FOOTER -->
         <footer
-          class="bg-background-dark/80 backdrop-blur-sm mt-auto relative ticket-bg border-t border-white/10"
+          class="mt-auto border-t border-white/10 bg-background-dark/90 backdrop-blur-sm"
           role="contentinfo"
         >
-          <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-white/70">
-              <div class="col-span-1 md:col-span-2">
-                <div class="flex items-center gap-2 text-white mb-4">
-                  <span class="material-symbols-outlined text-primary text-3xl"
+          <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 text-white/70 md:grid-cols-4">
+              <div class="md:col-span-2">
+                <div class="mb-4 flex items-center gap-2 text-white">
+                  <span class="material-symbols-outlined text-3xl text-primary"
                     >confirmation_number</span
                   >
                   <h2 class="text-xl font-bold">WEB-EVENTOS</h2>
                 </div>
-                <p class="text-sm max-w-md">
-                  Tu acceso a eventos con entradas oficiales y beneficios especiales. ¡No te
-                  pierdas ni un momento!
+                <p class="max-w-md text-sm">
+                  Tu acceso a eventos con entradas oficiales y beneficios especiales.  
+                  ¡No te pierdas ni un momento!
                 </p>
               </div>
+
               <div>
-                <h4 class="text-lg font-bold text-white mb-4">Contacto</h4>
+                <h4 class="mb-4 text-lg font-bold text-white">Contacto</h4>
                 <ul class="space-y-2 text-sm">
                   <li>
                     <a
-                      class="hover:text-primary transition-colors flex items-center gap-2"
                       href="mailto:Keenfest.pe@gmail.com"
-                      ><span class="material-symbols-outlined text-base">email</span
-                      >Keenfest.pe@gmail.com</a
+                      class="flex items-center gap-2 transition-colors hover:text-primary"
                     >
+                      <span class="material-symbols-outlined text-base">email</span>
+                      Keenfest.pe@gmail.com
+                    </a>
                   </li>
                   <li>
                     <a
-                      class="hover:text-primary transition-colors flex items-center gap-2"
                       href="tel:+51968424445"
-                      ><span class="material-symbols-outlined text-base">phone</span>+51
-                      968424445</a
+                      class="flex items-center gap-2 transition-colors hover:text-primary"
                     >
+                      <span class="material-symbols-outlined text-base">phone</span>
+                      +51 968424445
+                    </a>
                   </li>
                   <li>
-                    <a
-                      class="hover:text-primary transition-colors flex items-center gap-2"
-                      href="#"
-                      ><span class="material-symbols-outlined text-base">location_on</span
-                      >123 Calle Falsa, Ciudad Gótica</a
-                    >
+                    <span class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-base">location_on</span>
+                      123 Calle Falsa, Ciudad Gótica
+                    </span>
                   </li>
                 </ul>
               </div>
+
               <div>
-                <h4 class="text-lg font-bold text-white mb-4">Redes Sociales</h4>
+                <h4 class="mb-4 text-lg font-bold text-white">Redes Sociales</h4>
                 <div class="flex space-x-4">
                   <a
-                    class="text-white/70 hover:text-primary transition-colors"
                     href="https://www.instagram.com/keenfest/?hl=es"
                     target="_blank"
                     aria-label="Instagram"
+                    class="text-white/70 transition-colors hover:text-primary"
                   >
                     <svg
-                      class="w-6 h-6"
+                      class="h-6 w-6"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                       aria-hidden="true"
@@ -287,13 +333,13 @@
                     </svg>
                   </a>
                   <a
-                    class="text-white/70 hover:text-primary transition-colors"
                     href="https://www.tiktok.com/@keenfest"
                     target="_blank"
                     aria-label="TikTok"
+                    class="text-white/70 transition-colors hover:text-primary"
                   >
                     <svg
-                      class="w-6 h-6"
+                      class="h-6 w-6"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                       aria-hidden="true"
@@ -306,41 +352,40 @@
                 </div>
               </div>
             </div>
-            <div
-              class="mt-8 pt-8 border-t border-white/10 text-center text-sm text-white/50"
-            >
-              <p>© 2025 Web-Eventos. Todos los derechos reservados.</p>
+
+            <div class="mt-8 border-t border-white/10 pt-6 text-center text-sm text-white/50">
+              © 2025 Web-Eventos. Todos los derechos reservados.
             </div>
           </div>
         </footer>
       </div>
     </div>
 
-    <!-- Botón flotante WhatsApp -->
-    <a
-      href="https://wa.me/51968424445?text=Hola%2C%20quiero%20comprar%20entradas%20para%20un%20evento"
-      class="fixed z-50 bottom-4 right-4 group"
-      aria-label="Chatear por WhatsApp"
-    >
-      <div
-        class="h-14 w-14 rounded-full bg-green-500 flex items-center justify-center shadow-lg hover:scale-105 transition"
-      >
-        <svg viewBox="0 0 32 32" class="h-7 w-7 fill-white" aria-hidden="true">
-          <path
-            d="M19.11 17.64c-.27-.14-1.6-.79-1.85-.88s-.43-.14-.62.14-.71.88-.87 1.06-.32.2-.6.07a6.73 6.73 0 0 1-1.98-1.23 7.36 7.36 0 0 1-1.36-1.69c-.14-.24 0-.37.11-.5s.26-.31.39-.47.18-.27.27-.45a.52.52 0 0 0 0-.5c-.07-.14-.62-1.5-.85-2.05s-.45-.47-.62-.48h-.53a1 1 0 0 0-.74.35 3.13 3.13 0 0 0-.98 2.31 5.46 5.46 0 0 0 1.15 2.92 12.57 12.57 0 0 0 4.81 4.27 15.52 15.52 0 0 0 1.51.56 3.64 3.64 0 0 0 1.67.1 2.74 2.74 0 0 0 1.8-1.27 2.22 2.22 0 0 0 .15-1.27c-.06-.1-.25-.17-.52-.31z"
-          />
-          <path
-            d="M16 3a13 13 0 0 0-11 19.5L4 29l6.66-1.75A13 13 0 1 0 16 3zm7.69 20.69A10.9 10.9 0 0 1 10.92 26h-.09l-.17-.09-3.93 1 1-3.83-.12-.19a10.94 10.94 0 1 1 15.08 0z"
-          />
-        </svg>
-      </div>
-    </a>
+<<!-- BOTÓN FLOTANTE WHATSAPP (NUEVO) -->
+<a
+  href="https://wa.me/51968424445?text=Hola%2C%20quiero%20comprar%20entradas"
+  target="_blank"
+  class="fixed bottom-5 right-5 z-[9999] flex items-center justify-center 
+         h-14 w-14 rounded-full 
+         bg-gradient-to-br from-[#25D366] to-[#1ebe55]
+         shadow-xl shadow-black/40
+         hover:scale-110 hover:shadow-2xl 
+         transition-all duration-300"
+  aria-label="WhatsApp"
+>
+  <svg viewBox="0 0 24 24" class="h-7 w-7 fill-white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.149-.198.297-.768.966-.941 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.009-.372-.011-.571-.011-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.073.149.198 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.571-.347z"/>
+    <path d="M12.004 2C6.49 2 2 6.491 2 12.006c0 2.113.617 4 1.688 5.625L2 22l4.5-1.644c1.55.85 3.316 1.322 5.12 1.322 5.515 0 10.005-4.49 10.005-10.006C21.625 6.49 17.136 2 12.004 2zm0 18.38c-1.58 0-3.128-.42-4.48-1.216l-.32-.19-2.67.975.915-2.743-.21-.337a8.347 8.347 0 1 1 6.765 4.51z"/>
+  </svg>
+</a>
 
-    <!-- LÓGICA DEL EVENTO -->
+
+
+<!-- SCRIPT LÓGICA EVENTO -->
+
     <script type="module">
       import { events } from "./js/data/events.js";
 
-      // Helpers para YouTube (igual estilo que el modal)
       const isStr = (v) => typeof v === "string" && v.trim().length > 0;
       const isObj = (v) => v && typeof v === "object";
 
@@ -349,16 +394,26 @@
           const u = new URL(url);
           if (u.hostname.includes("youtu.be")) {
             const id = u.pathname.slice(1);
-            return id ? `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1` : url;
+            return id
+              ? "https://www.youtube-nocookie.com/embed/" +
+                  id +
+                  "?rel=0&modestbranding=1"
+              : url;
           }
           if (u.hostname.includes("youtube.com")) {
             const v = u.searchParams.get("v");
-            if (v)
-              return `https://www.youtube.com/embed/${v}?rel=0&modestbranding=1`;
+            if (v) {
+              return (
+                "https://www.youtube-nocookie.com/embed/" +
+                v +
+                "?rel=0&modestbranding=1"
+              );
+            }
             if (u.pathname.includes("/playlist") && u.searchParams.get("list")) {
-              return `https://www.youtube.com/embed/videoseries?list=${u.searchParams.get(
-                "list"
-              )}`;
+              return (
+                "https://www.youtube-nocookie.com/embed/videoseries?list=" +
+                u.searchParams.get("list")
+              );
             }
           }
           return url;
@@ -375,10 +430,12 @@
         if (Array.isArray(youtubeProp)) {
           return youtubeProp
             .map((it, i) => {
-              if (isStr(it)) return { title: `YouTube ${i + 1}`, url: it.trim() };
+              if (isStr(it)) {
+                return { title: "YouTube " + (i + 1), url: it.trim() };
+              }
               if (isObj(it) && isStr(it.url)) {
                 return {
-                  title: isStr(it.title) ? it.title.trim() : `YouTube ${i + 1}`,
+                  title: isStr(it.title) ? it.title.trim() : "YouTube " + (i + 1),
                   url: it.url.trim(),
                 };
               }
@@ -417,10 +474,13 @@
                 noviembre: 10,
                 diciembre: 11,
               };
-              return `${year}-${String(months[month.toLowerCase()] + 1).padStart(
-                2,
-                "0"
-              )}-${String(day).padStart(2, "0")}`;
+              return (
+                year +
+                "-" +
+                String(months[month.toLowerCase()] + 1).padStart(2, "0") +
+                "-" +
+                String(day).padStart(2, "0")
+              );
             }
           )
         );
@@ -441,7 +501,7 @@
         }
 
         return `
-          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold text-white ${badgeColor} badge-pill">
+          <span class="badge-pill inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold text-white ${badgeColor}">
             <span class="material-symbols-outlined text-base">event</span>
             ${badgeLabel}
           </span>
@@ -457,35 +517,38 @@
 
         const tabs = hasMultiple
           ? `
-            <div class="flex flex-wrap gap-2 mb-3" id="detail-video-tabs">
-              ${ytItems
-                .map(
-                  (item, i) => `
-                <button data-idx="${i}"
-                  class="tab-pill inline-flex items-center gap-1 px-3 py-1 rounded-full border border-white/20 text-white/80 hover:text-white hover:border-white/40 ${
-                    i === 0 ? "bg-white/10" : ""
-                  }">
-                  ${item.title || `YouTube ${i + 1}`}
-                </button>`
-                )
-                .join("")}
-            </div>`
+          <div class="mb-3 flex flex-wrap gap-2" id="detail-video-tabs">
+            ${ytItems
+              .map(
+                (item, i) => `
+              <button
+                data-idx="${i}"
+                class="tab-pill inline-flex items-center gap-1 rounded-full border border-white/20 px-3 py-1 text-xs font-medium text-white/80 hover:border-white/40 hover:text-white ${
+                  i === 0 ? "bg-white/10" : ""
+                }"
+              >
+                ${item.title || "YouTube " + (i + 1)}
+              </button>`
+              )
+              .join("")}
+          </div>`
           : "";
 
         return `
-          <div class="mt-8 space-y-3">
-            <h3 class="text-white font-bold flex items-center gap-2 text-lg">
+          <section class="mt-10 space-y-3">
+            <h3 class="flex items-center gap-2 text-lg font-bold text-white">
               <span class="material-symbols-outlined text-base text-primary">play_circle</span>
               Mira un set del artista
             </h3>
             ${tabs}
-            <div class="relative w-full overflow-hidden rounded-lg border border-white/10 bg-black/40">
+            <div class="relative overflow-hidden rounded-xl border border-white/10 bg-black/40">
               <div class="relative pt-[56.25%]">
                 <iframe
                   id="detail-video"
-                  class="absolute inset-0 w-full h-full rounded-lg"
+                  class="absolute inset-0 h-full w-full rounded-xl"
                   src="${embed0}"
                   title="YouTube video player"
+                  loading="lazy"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin"
                   allowfullscreen
@@ -493,14 +556,18 @@
               </div>
             </div>
             <div>
-              <a href="${first.url}" target="_blank" rel="noopener"
-                 id="detail-video-open"
-                 class="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white underline decoration-white/30">
+              <a
+                id="detail-video-open"
+                href="${first.url}"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 text-sm text-white/80 underline decoration-white/30 hover:text-white"
+              >
                 <span class="material-symbols-outlined text-base">open_in_new</span>
                 Ver en YouTube${first.title ? " — " + first.title : ""}
               </a>
             </div>
-          </div>
+          </section>
         `;
       }
 
@@ -509,14 +576,16 @@
         const tabs = document.querySelectorAll("#detail-video-tabs .tab-pill");
         const iframe = document.getElementById("detail-video");
         const open = document.getElementById("detail-video-open");
-        if (!tabs || !iframe || !open) return;
+        if (!tabs.length || !iframe || !open) return;
 
         tabs.forEach((tab) => {
           tab.addEventListener("click", () => {
             tabs.forEach((t) => t.classList.remove("bg-white/10"));
             tab.classList.add("bg-white/10");
-            const idx = parseInt(tab.dataset.idx, 10) || 0;
-            const item = ytItems[idx];
+
+            const idx = parseInt(tab.dataset.idx || "0", 10);
+            const item = ytItems[idx] || ytItems[0];
+
             iframe.src = toYouTubeEmbed(item.url);
             open.href = item.url;
             open.innerHTML = `
@@ -527,22 +596,43 @@
         });
       }
 
-      // Leer id desde la URL
+      // Obtener evento por ID
       const params = new URLSearchParams(window.location.search);
       const id = Number(params.get("id"));
       const evento = events.find((e) => e.id === id);
-
       const root = document.getElementById("evento-root");
 
       if (!evento) {
         root.innerHTML = `
-          <a href="index.html#eventos" class="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6">
-            <span class="material-symbols-outlined text-base">arrow_back</span>
-            Volver a todos los eventos
-          </a>
-          <div class="rounded-xl bg-red-900/40 border border-red-500/40 px-6 py-4 text-red-100 max-w-lg">
-            <p class="font-semibold text-lg mb-1">Evento no encontrado</p>
-            <p class="text-sm text-red-100/80">El enlace que abriste ya no es válido o el evento fue eliminado.</p>
+<div class="flex justify-center mb-8 mt-2">
+  <a
+    href="index.html#eventos"
+    class="group inline-flex items-center gap-3 px-5 py-3 rounded-full 
+           bg-white/10 backdrop-blur-lg shadow-lg border border-white/10
+           text-white font-medium text-sm
+           hover:bg-white/20 hover:border-white/20 transition-all"
+  >
+    <div
+      class="flex items-center justify-center h-7 w-7 rounded-full 
+             bg-primary/20 border border-primary/40 
+             group-hover:bg-primary/30 transition"
+    >
+      <span class="material-symbols-outlined text-primary text-base">
+        arrow_back
+      </span>
+    </div>
+
+    <span class="tracking-wide group-hover:underline">
+      Volver a todos los eventos
+    </span>
+  </a>
+</div>
+
+          <div class="max-w-lg rounded-xl border border-red-500/40 bg-red-900/40 px-6 py-4 text-red-100">
+            <p class="mb-1 text-lg font-semibold">Evento no encontrado</p>
+            <p class="text-sm text-red-100/80">
+              El enlace que abriste ya no es válido o el evento fue eliminado.
+            </p>
           </div>
         `;
       } else {
@@ -551,218 +641,287 @@
         const youtubeHtml = buildYouTubeBlock(ytItems);
 
         const whatsappMessage = encodeURIComponent(
-          `Hola, quiero entradas para el evento: ${evento.title} (${evento.date} en ${evento.location}).`
+          "Hola, quiero entradas para el evento: " +
+            evento.title +
+            " (" +
+            evento.date +
+            " en " +
+            evento.location +
+            ")."
         );
-        const whatsappLink = `https://wa.me/51968424445?text=${whatsappMessage}`;
+        const whatsappLink = "https://wa.me/51968424445?text=" + whatsappMessage;
 
         root.innerHTML = `
-          <a href="index.html#eventos" class="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6">
-            <span class="material-symbols-outlined text-base">arrow_back</span>
-            Volver a todos los eventos
-          </a>
+<div class="flex justify-center mt-4 mb-10">
+<a
+  href="index.html#eventos"
+  class="group inline-flex items-center gap-2 px-4 py-2 rounded-full
+         bg-white/15 backdrop-blur-xl
+         border border-white/20
+         text-white font-medium text-xs
+         hover:bg-white/25 hover:border-white/30 transition-all duration-200"
+>
+    <!-- Ícono circular -->
+    <div
+      class="flex items-center justify-center h-6 w-6 rounded-full 
+             bg-gradient-to-br from-primary/70 to-primary/40
+             group-hover:scale-110 transition"
+    >
+      <span class="material-symbols-outlined text-white text-sm">
+        arrow_back
+      </span>
+    </div>
 
-          <section class="detail-card rounded-2xl border border-white/10 shadow-2xl shadow-primary/30 p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none opacity-40">
-              <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/30 rounded-full blur-3xl"></div>
-              <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl"></div>
+    <span class="tracking-wide group-hover:underline">Volver a todos los eventos</span>
+</a>
+
+</div>
+
+
+<section
+  class="detail-card relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-white/10 px-5 py-7 sm:px-8 sm:py-9 lg:px-10"
+>
+
+            <div class="pointer-events-none absolute inset-0 opacity-40">
+              <div class="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/30 blur-3xl"></div>
+              <div class="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-pink-500/20 blur-3xl"></div>
             </div>
 
-            <div class="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1.1fr)] items-start">
+            <div class="relative z-10 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1.1fr)]">
               <!-- Columna izquierda: info principal -->
-              <div class="space-y-6">
-<div class="flex flex-wrap items-center gap-3">
-  ${badgeHtml}
-</div>
+              <article class="space-y-5 text-white">
+                <div class="flex flex-wrap items-center gap-3">
+                  ${badgeHtml}
+
+                </div>
+
+                <h2 class="text-2xl font-extrabold leading-tight sm:text-3xl lg:text-4xl">
+                  ${evento.title}
+                </h2>
+
+                <div class="space-y-2 text-sm text-white/80">
+                  <p class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base text-primary">event</span>
+                    <span>${evento.date}</span>
+                  </p>
+                  <p class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base text-primary">schedule</span>
+                    <span>${evento.time || "Horario por confirmar"}</span>
+                  </p>
+                  <p class="flex items-start gap-2">
+                    <span class="material-symbols-outlined mt-0.5 text-base text-primary">location_on</span>
+                    <span>${evento.location}</span>
+                  </p>
+                </div>
+
+                ${
+                  evento.description
+                    ? `
+                  <div class="mt-4 space-y-2 text-sm leading-relaxed text-white/80">
+                    <h3 class="text-sm font-semibold text-white/90">
+                      Sobre el evento
+                    </h3>
+                    <p>${evento.description}</p>
+                  </div>`
+                    : ""
+                }
+
+                ${
+                  evento.tags && evento.tags.length
+                    ? `
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    ${evento.tags
+                      .map(
+                        (tag) => `
+                      <span
+                        class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80"
+                      >
+                        #${tag}
+                      </span>`
+                      )
+                      .join("")}
+                  </div>`
+                    : ""
+                }
+
+                ${youtubeHtml}
+              </article>
+
+              <!-- Columna derecha: entradas / promo -->
+              <aside
+                class="space-y-6 rounded-2xl border border-white/15 bg-black/35 p-5 sm:p-6"
+              >
+                ${
+                  evento.id === 4
+                    ? `
+                <!-- BLOQUE ESPECIAL PREVENTA (ID 4) -->
+                <div class="space-y-7 text-white">
+                  <h3 class="flex items-center gap-2 text-xl font-extrabold">
+                    <span class="material-symbols-outlined text-primary">sell</span>
+                    Descuento exclusivo para esta preventa
+                  </h3>
+
+                  <div class="space-y-3 text-sm leading-relaxed">
+                    <p>
+                      Obtén un descuento especial comprando tus entradas desde Joinnus. Copia el
+                      código promocional y úsalo en la sección
+                      <strong>“Canje / Código Promocional”</strong> antes de pagar.
+                    </p>
+                    <p class="font-semibold text-primary">
+                      Beneficio exclusivo para usuarios que vienen desde esta página.
+                    </p>
+                  </div>
+
+                  <!-- Código -->
+                  <div
+                    class="promo-code w-full rounded-xl bg-white py-5 text-center text-3xl font-extrabold tracking-[0.4em] text-[#0A1A3C] shadow-xl shadow-black/30 sm:text-4xl"
+                  >
+                    KEENFEST
+                  </div>
+
+                  <!-- Botón copiar -->
+                  <button
+                    id="copyPromo"
+                    class="mx-auto block rounded-lg bg-green-500 px-8 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-green-600"
+                  >
+                    Copiar código
+                  </button>
+
+                  <!-- Instrucciones -->
+                  <div
+                    class="space-y-6 rounded-xl border border-white/10 bg-white/5 p-5 text-sm"
+                  >
+                    <p class="text-base font-bold text-white">Cómo usar tu descuento:</p>
+
+                    <div class="flex items-start gap-4">
+                      <span
+                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white shadow-lg shadow-primary/40"
+                      >
+                        1
+                      </span>
+                      <p>Copia el código <span class="font-bold text-green-400">KEENFEST</span>.</p>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                      <span
+                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white shadow-lg shadow-primary/40"
+                      >
+                        2
+                      </span>
+                      <p>Haz clic en uno de los botones de abajo para ir al evento en Joinnus.</p>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                      <span
+                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white shadow-lg shadow-primary/40"
+                      >
+                        3
+                      </span>
+                      <p>
+                        Pega el código en
+                        <strong>Canje / Código Promocional</strong> antes de pagar.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Botones Joinnus -->
+                  <a
+                    id="btnNormal"
+                    href="#"
+                    class="flex h-12 w-full items-center justify-center rounded-xl bg-[#FF5555] px-6 text-center text-sm font-extrabold text-white opacity-50 transition hover:bg-[#ff3333] pointer-events-none"
+                  >
+                    🎟️ Comprar Entradas Normales (Joinnus)
+                  </a>
+
+                  <a
+                    id="btnBoxes"
+                    href="#"
+                    class="flex h-12 w-full items-center justify-center rounded-xl bg-[#0099FF] px-6 text-center text-sm font-extrabold text-white opacity-50 transition hover:bg-[#0077cc] pointer-events-none"
+                  >
+                    🥂 Comprar Boxes / Mesas (Joinnus)
+                  </a>
+
+                  <p class="mt-1 text-center text-xs text-white/60">
+                    Debes copiar el código antes de continuar.
+                  </p>
+                </div>
+                `
+                    : `
+                <!-- OTROS EVENTOS: LISTA DE ENTRADAS + WHATSAPP -->
+                ${
+                  Array.isArray(evento.tickets) && evento.tickets.length
+                    ? `
+                <div class="space-y-3">
+                  <h3 class="text-sm font-semibold uppercase tracking-[0.15em] text-white/60">
+                    Entradas disponibles
+                  </h3>
+                  <div
+                    id="tickets-scroll"
+                    class="max-h-[260px] space-y-2 overflow-y-auto pr-1"
+                  >
+                    ${evento.tickets
+                      .map(
+                        (t) => `
+                      <div
+                        class="flex items-center justify-between rounded-lg border border-dashed border-white/18 bg-white/5 p-3 text-sm text-white transition-all duration-200 hover:border-primary hover:bg-primary/10"
+                      >
+                        <div class="flex items-start gap-3">
+                          <span class="material-symbols-outlined text-2xl text-primary">
+                            confirmation_number
+                          </span>
+                          <div>
+                            <p class="font-semibold">${t.type}</p>
+                            ${
+                              t.description
+                                ? `<p class="text-xs text-white/60">${t.description}</p>`
+                                : ""
+                            }
+                          </div>
+                        </div>
+                        <span class="whitespace-nowrap text-sm font-bold">
+                          ${
+                            typeof t.price === "number" && t.price > 0
+                              ? "S/ " + t.price.toFixed(2)
+                              : "Consultar"
+                          }
+                        </span>
+                      </div>`
+                      )
+                      .join("")}
+                  </div>
+                </div>
+                `
+                    : ""
+                }
 
                 <div class="space-y-3">
-                  <h1 class="text-3xl md:text-4xl font-extrabold text-white leading-tight">
-                    ${evento.title}
-                  </h1>
-                  <p class="text-sm text-white/70 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-base">calendar_today</span>
-                    ${evento.date}
-                  </p>
-                  <p class="text-sm text-white/70 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-base">location_on</span>
-                    ${evento.location}
-                  </p>
+                  <a
+                    href="${whatsappLink}"
+                    target="_blank"
+                    class="flex h-11 w-full items-center justify-center rounded-lg bg-green-500 px-6 text-sm font-bold text-white transition hover:bg-green-600"
+                  >
+                    Comprar entrada por WhatsApp
+                  </a>
+
+                  ${
+                    evento.whatsappGroupUrl
+                      ? `
+                  <a
+                    href="${evento.whatsappGroupUrl}"
+                    target="_blank"
+                    class="flex h-10 w-full items-center justify-center rounded-lg bg-green-600/10 px-4 text-xs font-bold text-green-300 ring-1 ring-inset ring-green-500/40 transition hover:bg-green-600/20"
+                  >
+                    <span class="material-symbols-outlined mr-2 text-base">group</span>
+                    Unirme al grupo oficial del evento
+                  </a>
+                  `
+                      : ""
+                  }
                 </div>
-
-                <div class="relative rounded-xl overflow-hidden border border-white/15 bg-black/40">
-                  <img
-                    src="${evento.image}"
-                    alt="${evento.title}"
-                    class="w-full max-h-[420px] object-cover object-top"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="prose prose-invert max-w-none text-white/80 text-sm sm:text-base leading-relaxed">
-                  ${evento.description}
-                </div>
-
-              </div>
-
-              <!-- Columna derecha: entradas + acciones -->
-<aside class="relative bg-black/30 rounded-2xl border border-white/15 p-5 sm:p-6 space-y-6">
-
-${evento.id === 4 ? "" : `
-<div class="space-y-3 max-h-[260px] overflow-y-auto pr-1" id="tickets-scroll">
-  ${Array.isArray(evento.tickets)
-    ? evento.tickets
-        .map(
-          (t) => `
-      <div class="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-dashed border-white/20 hover:border-primary hover:bg-primary/10 transition-all duration-200">
-        <div class="flex items-start gap-3">
-          <span class="material-symbols-outlined text-primary text-2xl">confirmation_number</span>
-          <div>
-            <p class="font-semibold text-white text-sm">${t.type}</p>
-            <p class="text-xs text-white/60">${t.description || ""}</p>
-          </div>
-        </div>
-        <span class="text-base font-bold text-white whitespace-nowrap">
-          ${
-            typeof t.price === "number" && t.price > 0
-              ? "S/ " + t.price.toFixed(2)
-              : "Consultar"
-          }
-        </span>
-      </div>
-    `
-        )
-        .join("")
-    : ""}
-</div>
-`}
-
- <div class="space-y-3">
-
- ${
-evento.id === 4
-? `
-<!-- ⭐ EXCEPCIÓN PARA COCHINOLA (ID 4) ⭐ -->
-
-<div class="p-5 text-white space-y-6">
-
-  <!-- Título -->
-  <h3 class="text-xl font-extrabold flex items-center gap-2">
-    <span class="material-symbols-outlined text-primary">sell</span>
-    Descuento exclusivo para esta preventa
-  </h3>
-
-  <!-- Explicación simple -->
-<div class="p-4 space-y-3 text-sm leading-relaxed">
-    <p>
-      Obtén un descuento especial comprando tus entradas desde Joinnus. 
-      Solo debes copiar el código promocional y aplicarlo en la sección 
-      <strong>“Canje / Código Promocional”</strong> antes de pagar.
-    </p>
-
-    <p class="text-primary font-semibold">
-      Este beneficio es exclusivo para usuarios provenientes de esta página.
-    </p>
-  </div>
-
-  <!-- Caja código -->
-  <div class="w-full text-center py-4 rounded-xl 
-              bg-white text-[#0A1A3C] font-extrabold text-3xl tracking-widest shadow-lg">
-    KEENFEST
-  </div>
-
-  <!-- Botón copiar -->
-  <button
-    id="copyPromo"
-    class="block mx-auto px-6 py-2 rounded-lg bg-green-500 text-white font-semibold text-sm hover:bg-green-600 transition">
-    Copiar código
-  </button>
-
-  <!-- Instrucciones -->
-<div class="mt-2 space-y-4 text-sm p-4 rounded-lg border border-white/10">
-    <p class="font-semibold text-white mb-2">Cómo usar tu descuento:</p>
-
-<div class="flex items-start gap-3">
-  <span class="bg-primary text-white font-bold rounded-full 
-              w-8 h-8 min-w-[2rem] min-h-[2rem]
-              flex items-center justify-center shrink-0 text-sm">
-    1
-  </span>
-      <p>Copia el código <span class="text-green-400 font-bold">KEENFEST</span>.</p>
-    </div>
-
-<div class="flex items-start gap-3">
-  <span class="bg-primary text-white font-bold rounded-full 
-              w-8 h-8 min-w-[2rem] min-h-[2rem]
-              flex items-center justify-center shrink-0 text-sm">
-    2
-  </span>
-      <p>Haz clic en un botón de abajo para ir a la página oficial del evento en Joinnus.</p>
-    </div>
-
-<div class="flex items-start gap-3">
-  <span class="bg-primary text-white font-bold rounded-full 
-              w-8 h-8 min-w-[2rem] min-h-[2rem]
-              flex items-center justify-center shrink-0 text-sm">
-    3
-  </span>
-      <p>Pega el código en <strong>Canje / Código Promocional</strong> antes de pagar.</p>
-    </div>
-  </div>
-
-  <!-- BOTONES JOINNUS DESTACADOS -->
-  <a
-    id="btnNormal"
-    href="#"
-    class="w-full flex items-center justify-center rounded-lg h-12 px-6 
-           bg-[#FF5555] opacity-50 pointer-events-none 
-           text-white font-extrabold text-sm hover:bg-[#ff3333] transition shadow-lg">
-      🎟️ Comprar Entradas Normales (Joinnus)
-  </a>
-
-  <a
-    id="btnBoxes"
-    href="#"
-    class="w-full flex items-center justify-center rounded-lg h-12 px-6 
-           bg-[#0099FF] opacity-50 pointer-events-none 
-           text-white font-extrabold text-sm hover:bg-[#0077cc] transition shadow-lg">
-      🥂 Comprar Boxes / Mesas (Joinnus)
-  </a>
-
-  <p class="text-xs text-center text-white/60">
-    Debes copiar el código antes de continuar.
-  </p>
-</div>
-
-`
-: `
-<!-- ✔️ OTROS EVENTOS -->
-<a href="${whatsappLink}" target="_blank"
-   class="w-full flex items-center justify-center rounded-lg h-11 px-6 bg-green-500 text-white font-bold hover:bg-green-600 transition">
-   Comprar entrada por WhatsApp
-</a>
-
-${
-evento.whatsappGroupUrl
-? `
-<a
-  href="${evento.whatsappGroupUrl}"
-  target="_blank"
-  class="w-full flex items-center justify-center rounded-lg h-10 px-4 bg-green-500 text-white text-sm font-bold hover:bg-green-600 transition-colors"
->
-  <span class="material-symbols-outlined text-base mr-2">group</span>
-  Unirme al grupo oficial del evento
-</a>
-`
-: ""
-}
-`
-}
-
-
-</div>
-
+                `
+                }
               </aside>
             </div>
-          ${youtubeHtml}             
           </section>
         `;
 
@@ -770,105 +929,90 @@ evento.whatsappGroupUrl
           wireYouTubeTabs(ytItems);
         }
 
-        // === BLOQUEO DE ENLACES HASTA COPIAR EL CÓDIGO ===
+        // === LÓGICA ESPECIAL PARA CÓDIGO KEENFEST (ID 4) ===
         let codigoCopiado = false;
-
         const btnCopy = document.getElementById("copyPromo");
         const btnNormal = document.getElementById("btnNormal");
         const btnBoxes = document.getElementById("btnBoxes");
         const modal = document.getElementById("modalCopiar");
 
-        // Copiar código
         if (btnCopy) {
           btnCopy.addEventListener("click", async () => {
-            await navigator.clipboard.writeText("KEENFEST");
-            codigoCopiado = true;
+            try {
+              await navigator.clipboard.writeText("KEENFEST");
+              codigoCopiado = true;
 
-            btnCopy.textContent = "¡Copiado!";
-            btnCopy.classList.remove("bg-green-500");
-            btnCopy.classList.add("bg-purple-600");
+              btnCopy.textContent = "¡Copiado!";
+              btnCopy.classList.remove("bg-green-500");
+              btnCopy.classList.add("bg-purple-600");
 
-            btnNormal.href =
-              "https://classic.joinnus.com/events/party/lima-cochi-la-ultima-cena-72979/canje";
-            btnBoxes.href =
-              "https://classic.joinnus.com/events/concerts/lima-cochi-ultima-cena-boxes-72960/canje";
-
-            btnNormal.classList.remove("opacity-50", "pointer-events-none");
-            btnBoxes.classList.remove("opacity-50", "pointer-events-none");
+              if (btnNormal) {
+                btnNormal.href =
+                  "https://classic.joinnus.com/events/party/lima-cochi-la-ultima-cena-72979/canje";
+                btnNormal.classList.remove("opacity-50", "pointer-events-none");
+              }
+              if (btnBoxes) {
+                btnBoxes.href =
+                  "https://classic.joinnus.com/events/concerts/lima-cochi-ultima-cena-boxes-72960/canje";
+                btnBoxes.classList.remove("opacity-50", "pointer-events-none");
+              }
+            } catch {
+              // Silencioso: si falla el portapapeles no rompemos nada
+            }
           });
         }
 
-        // Función para bloquear botones
         function bloquear(btn) {
-          if (!btn) return;
+          if (!btn || !modal) return;
           btn.addEventListener("click", (e) => {
             if (!codigoCopiado) {
               e.preventDefault();
-modal.classList.add("show");
-
-setTimeout(() => {
-  modal.classList.remove("show");
-}, 1800);
-
+              modal.classList.add("show");
+              setTimeout(() => modal.classList.remove("show"), 1800);
             }
           });
         }
 
         bloquear(btnNormal);
         bloquear(btnBoxes);
+      }
 
-      } // cierre correcto del else
+      // Menú móvil
+      const btnMobile = document.getElementById("mobile-menu-toggle");
+      const menu = document.getElementById("mobile-menu");
 
-    // Menú móvil (corregido)
-    const btnMobile = document.getElementById("mobile-menu-toggle");
-    const menu = document.getElementById("mobile-menu");
+      if (btnMobile && menu) {
+        btnMobile.addEventListener("click", () => {
+          const hidden = menu.classList.toggle("hidden");
+          btnMobile.setAttribute("aria-expanded", String(!hidden));
+        });
 
-    if (btnMobile && menu) {
-      btnMobile.addEventListener("click", () => {
-        const isHidden = menu.classList.toggle("hidden");
-        btnMobile.setAttribute("aria-expanded", String(!isHidden));
-      });
-
-      menu.addEventListener("click", (e) => {
-        const link = e.target.closest("a");
-        if (!link) return;
-
-        if (!menu.classList.contains("hidden")) {
-          menu.classList.add("hidden");
-          btnMobile.setAttribute("aria-expanded", "false");
-        }
-      });
-    }
-
+        menu.addEventListener("click", (e) => {
+          const link = e.target.closest("a");
+          if (!link) return;
+          if (!menu.classList.contains("hidden")) {
+            menu.classList.add("hidden");
+            btnMobile.setAttribute("aria-expanded", "false");
+          }
+        });
+      }
     </script>
-<!-- MINI MODAL - Copiar código -->
-<div id="modalCopiar"
-  class="fixed inset-0 backdrop-blur-sm bg-black/60 flex items-center justify-center z-[999]
-         opacity-0 pointer-events-none transition-all duration-300">
 
-  <div class="px-7 py-4 rounded-xl shadow-2xl border border-white/20
-              bg-[#0A0A14]/90 text-white text-sm font-medium
-              scale-90 opacity-0 transition-all duration-300"
-       id="modalCopiarBox">
-    <p class="text-center">
-      Debes copiar el código <span class="text-green-300 font-extrabold">KEENFEST</span>
- antes de continuar.
-    </p>
-  </div>
-
-</div>
-
-<style>
-/* Animaciones suaves */
-#modalCopiar.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#modalCopiar.show #modalCopiarBox {
-  opacity: 1;
-  scale: 1;
-}
-</style>
+    <!-- MODAL Copiar código -->
+    <div
+      id="modalCopiar"
+      class="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+    >
+      <div
+        id="modalCopiarBox"
+        class="rounded-xl border border-white/20 bg-[#0A0A14]/90 px-7 py-4 text-sm font-medium text-white shadow-2xl"
+      >
+        <p class="text-center">
+          Debes copiar el código
+          <span class="font-extrabold text-green-300">KEENFEST</span>
+          antes de continuar.
+        </p>
+      </div>
+    </div>
   </body>
 </html>
