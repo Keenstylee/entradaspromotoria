@@ -361,7 +361,7 @@
       </div>
     </div>
 
-<<!-- BOTÓN FLOTANTE WHATSAPP (NUEVO) -->
+<!-- BOTÓN FLOTANTE WHATSAPP (NUEVO) -->
 <a
   href="https://wa.me/51968424445?text=Hola%2C%20quiero%20comprar%20entradas"
   target="_blank"
@@ -714,17 +714,26 @@
                   </p>
                 </div>
 
-                ${
-                  evento.description
-                    ? `
-                  <div class="mt-4 space-y-2 text-sm leading-relaxed text-white/80">
-                    <h3 class="text-sm font-semibold text-white/90">
-                      Sobre el evento
-                    </h3>
-                    <p>${evento.description}</p>
-                  </div>`
-                    : ""
-                }
+${
+  evento.description
+    ? `
+  <div class="mt-4 space-y-2 text-sm leading-relaxed text-white/80">
+    <h3 class="text-sm font-semibold text-white/90">Sobre el evento</h3>
+
+<p id="eventoDesc" class="line-clamp-1 overflow-hidden transition-all duration-300">
+      ${evento.description}
+    </p>
+
+    <button
+      id="btnLeerMas"
+      class="text-primary text-xs font-semibold hover:underline mt-1"
+    >
+      Leer más
+    </button>
+  </div>`
+    : ""
+}
+
 
                 ${
                   evento.tags && evento.tags.length
@@ -973,9 +982,29 @@
           });
         }
 
-        bloquear(btnNormal);
-        bloquear(btnBoxes);
-      }
+bloquear(btnNormal);
+bloquear(btnBoxes);
+}
+
+// ====== Leer más / Leer menos ======
+const desc = document.getElementById("eventoDesc");
+const btnLeerMas = document.getElementById("btnLeerMas");
+
+if (desc && btnLeerMas) {
+  let abierto = false;
+
+  btnLeerMas.addEventListener("click", () => {
+    abierto = !abierto;
+
+    if (abierto) {
+desc.classList.remove("line-clamp-1");
+      btnLeerMas.textContent = "Leer menos";
+    } else {
+desc.classList.add("line-clamp-1");
+      btnLeerMas.textContent = "Leer más";
+    }
+  });
+}
 
       // Menú móvil
       const btnMobile = document.getElementById("mobile-menu-toggle");
