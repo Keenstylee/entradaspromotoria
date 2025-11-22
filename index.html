@@ -386,4 +386,26 @@
       </button>
     </div>
   </body>
+
+<!-- MINI MODAL - Copiar código -->
+<div id="modalCopiar"
+  class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[999] hidden">
+  <div class="bg-white dark:bg-neutral-900 text-black dark:text-white px-6 py-4 rounded-xl shadow-xl border border-white/10 animate-fade">
+    <p class="font-semibold text-center">
+      Debes copiar el código <span class="text-primary font-bold">KEENFEST</span> antes de continuar.
+    </p>
+  </div>
+</div>
+
+<style>
+@keyframes fade {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fade {
+  animation: fade .25s ease-out;
+}
+</style>
+
+
 </html>
