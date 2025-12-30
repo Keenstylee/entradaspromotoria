@@ -1,14 +1,17 @@
 export function createCarouselSlide(screen) {
   return `
     <div class="carousel-slide flex-shrink-0">
-      <img alt="Captura de venta ${screen.id}"
+      <img 
+        alt="Captura de venta ${screen.id}"
         class="rounded-lg shadow-lg w-full h-auto object-contain"
         src="${screen.image}"
         loading="lazy"
+        onerror="this.onerror=null; console.warn('❌ Imagen no encontrada:', this.src); this.src='img/capturas/cap1.jpeg';"
       />
     </div>
   `;
 }
+
 
 export function renderCarousel(screens, containerId, trackId, prevButtonId, nextButtonId) {
   const container = document.getElementById(containerId);

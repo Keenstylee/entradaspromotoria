@@ -384,7 +384,7 @@
 <!-- SCRIPT LÓGICA EVENTO -->
 
     <script type="module">
-      import { events } from "./js/data/events.js";
+import { getEventById } from "./js/eventsService.js";
 
       const isStr = (v) => typeof v === "string" && v.trim().length > 0;
       const isObj = (v) => v && typeof v === "object";
@@ -454,59 +454,55 @@
         return [];
       }
 
-      function buildBadgeHtml(eventDateString) {
-        const now = new Date();
-        const eventDate = new Date(
-          eventDateString.replace(
-            /(\d{1,2}) de (\w+),? (\d{4})/,
-            (m, day, month, year) => {
-              const months = {
-                enero: 0,
-                febrero: 1,
-                marzo: 2,
-                abril: 3,
-                mayo: 4,
-                junio: 5,
-                julio: 6,
-                agosto: 7,
-                septiembre: 8,
-                octubre: 9,
-                noviembre: 10,
-                diciembre: 11,
-              };
-              return (
-                year +
-                "-" +
-                String(months[month.toLowerCase()] + 1).padStart(2, "0") +
-                "-" +
-                String(day).padStart(2, "0")
-              );
-            }
-          )
-        );
+function formatDateForUI(dateValue) {
+  if (!dateValue) return "";
+  const d = new Date(dateValue);
+  return d.toLocaleDateString("es-PE", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 
-        const diff = (eventDate - now) / (1000 * 60 * 60 * 24);
-        let badgeLabel = "";
-        let badgeColor = "";
+function formatTimeForUI(dateValue) {
+  if (!dateValue) return "";
+  const d = new Date(dateValue);
+  return d.toLocaleTimeString("es-PE", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 
-        if (diff < -0.5) {
-          badgeLabel = "Finalizado";
-          badgeColor = "bg-red-600";
-        } else if (Math.abs(diff) <= 0.5) {
-          badgeLabel = "Hoy";
-          badgeColor = "bg-yellow-500";
-        } else {
-          badgeLabel = "Próximo evento";
-          badgeColor = "bg-green-600";
-        }
 
-        return `
-          <span class="badge-pill inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold text-white ${badgeColor}">
-            <span class="material-symbols-outlined text-base">event</span>
-            ${badgeLabel}
-          </span>
-        `;
-      }
+
+
+function buildBadgeHtml(dateValue) {
+  const now = new Date();
+  const eventDate = new Date(dateValue);
+
+  const diff = (eventDate - now) / (1000 * 60 * 60 * 24);
+  let badgeLabel = "";
+  let badgeColor = "";
+
+  if (diff < -0.5) {
+    badgeLabel = "Finalizado";
+    badgeColor = "bg-red-600";
+  } else if (Math.abs(diff) <= 0.5) {
+    badgeLabel = "Hoy";
+    badgeColor = "bg-yellow-500";
+  } else {
+    badgeLabel = "Próximo evento";
+    badgeColor = "bg-green-600";
+  }
+
+  return `
+    <span class="badge-pill inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold text-white ${badgeColor}">
+      <span class="material-symbols-outlined text-base">event</span>
+      ${badgeLabel}
+    </span>
+  `;
+}
 
       function buildYouTubeBlock(ytItems) {
         if (!ytItems.length) return "";
@@ -598,9 +594,17 @@
 
       // Obtener evento por ID
       const params = new URLSearchParams(window.location.search);
-      const id = Number(params.get("id"));
-      const evento = events.find((e) => e.id === id);
-      const root = document.getElementById("evento-root");
+const id = Number(params.get("id"));
+const root = document.getElementById("evento-root");
+
+let evento = null;
+
+if (!Number.isFinite(id)) {
+  evento = null;
+} else {
+  evento = await getEventById(id);
+}
+
 
       if (!evento) {
         root.innerHTML = `
@@ -637,18 +641,20 @@
         `;
       } else {
         const ytItems = normalizeYouTubeSources(evento.youtube);
-        const badgeHtml = buildBadgeHtml(evento.date);
+const badgeHtml = buildBadgeHtml(evento.date);
         const youtubeHtml = buildYouTubeBlock(ytItems);
 
-        const whatsappMessage = encodeURIComponent(
-          "Hola, quiero entradas para el evento: " +
-            evento.title +
-            " (" +
-            evento.date +
-            " en " +
-            evento.location +
-            ")."
-        );
+const whatsappMessage = encodeURIComponent(
+  "Hola, quiero entradas para el evento: " +
+    evento.title +
+    " (" +
+    formatDateForUI(evento.date) +
+    " - " +
+    formatTimeForUI(evento.date) +
+    " en " +
+    evento.location +
+    ")."
+);
         const whatsappLink = "https://wa.me/51968424445?text=" + whatsappMessage;
 
         root.innerHTML = `
@@ -702,11 +708,11 @@
                 <div class="space-y-2 text-sm text-white/80">
                   <p class="flex items-center gap-2">
                     <span class="material-symbols-outlined text-base text-primary">event</span>
-                    <span>${evento.date}</span>
+<span>${formatDateForUI(evento.date)}</span>
                   </p>
                   <p class="flex items-center gap-2">
                     <span class="material-symbols-outlined text-base text-primary">schedule</span>
-                    <span>${evento.time || "Horario por confirmar"}</span>
+<span>${formatTimeForUI(evento.date) || "Horario por confirmar"}</span>
                   </p>
                   <p class="flex items-start gap-2">
                     <span class="material-symbols-outlined mt-0.5 text-base text-primary">location_on</span>
