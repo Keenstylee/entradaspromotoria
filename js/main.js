@@ -1,13 +1,14 @@
 import { events as localEvents } from "./data/events.js";
 import { getEvents } from "./eventsService.js";
-
+import { getScreens } from "./screensService.js";
 import { testimonials } from "./data/testimonials.js";
-import { screens } from "./data/screens.js";
 
 import { renderEvents } from "./components/eventCard.js";
 import { renderTestimonials } from "./components/testimonialCard.js";
 import { renderCarousel } from "./components/carousel.js";
 import createWhoIamSection from "./components/whoIam.js";
+
+
 
 console.log("✅ EVENTOS LOCALES:", localEvents);
 
@@ -139,15 +140,20 @@ async function initApp() {
   console.log(`✅ ${eventsData.length} eventos cargados (ordenados)`);
 
   // Otras secciones
-  renderTestimonials(testimonials, "testimonials-grid");
-  renderCarousel(
-    screens,
-    "carousel-container",
-    "carousel-track",
-    "carousel-prev",
-    "carousel-next"
-  );
-  createWhoIamSection();
+ renderTestimonials(testimonials, "testimonials-grid");
+
+const screens = await getScreens(); 
+console.log("🖼️ Capturas desde Supabase:", screens);
+
+renderCarousel(
+  screens,
+  "carousel-container",
+  "carousel-track",
+  "carousel-prev",
+  "carousel-next"
+);
+
+createWhoIamSection();
 
   // HERO: fondo carrusel con flyers
   renderHeroBackgroundCarousel(eventsData, "hero-bg", 4000);

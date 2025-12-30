@@ -154,6 +154,18 @@
 
             </div>
 
+<!-- Admin (solo aparece si hay sesión) -->
+<a
+  id="admin-btn"
+  href="admin.html"
+  class="hidden sm:inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-white/10 text-black dark:text-white font-bold hover:bg-white/20 transition"
+  aria-label="Ir al panel admin"
+>
+  <span class="material-symbols-outlined text-base">admin_panel_settings</span>
+  Admin
+</a>
+
+
             <!-- CTA WhatsApp + menú móvil -->
             <div class="flex items-center gap-3">
               <a href="https://wa.me/51968424445?text=Hola%2C%20quiero%20entradas%20con%20descuento"
@@ -330,6 +342,7 @@
 
     <!-- Scripts -->
     <script type="module" src="js/main.js"></script>
+<script type="module" src="js/adminButton.js"></script>
 
     <!-- Modal de Entradas -->
     <div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" id="ticketModal">
