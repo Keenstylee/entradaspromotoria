@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin - Web Eventos</title>
 
-  <!-- si usas Tailwind CDN en tu proyecto, déjalo -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-black text-white">
 
+<body class="min-h-screen bg-black text-white">
   <main class="max-w-5xl mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6">Panel Admin</h1>
 
@@ -18,9 +17,14 @@
       <h2 class="text-xl font-semibold mb-4">Iniciar sesión</h2>
 
       <div class="grid gap-3 max-w-md">
-        <input id="email" type="email" placeholder="Email" class="p-3 rounded bg-black/40 border border-white/10"/>
-        <input id="password" type="password" placeholder="Contraseña" class="p-3 rounded bg-black/40 border border-white/10"/>
-        <button id="btn-login" class="bg-green-600 hover:bg-green-700 p-3 rounded font-semibold">
+        <input id="email" type="email" placeholder="Email"
+          class="p-3 rounded bg-black/40 border border-white/10"/>
+
+        <input id="password" type="password" placeholder="Contraseña"
+          class="p-3 rounded bg-black/40 border border-white/10"/>
+
+        <button id="btn-login"
+          class="bg-green-600 hover:bg-green-700 p-3 rounded font-semibold">
           Entrar
         </button>
 
@@ -32,36 +36,54 @@
     <section id="admin-section" class="hidden mt-8">
 
       <div class="flex items-center justify-between mb-4">
-        <h2 class="text-2xl font-semibold">Eventos</h2>
-        <button id="btn-logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold">
+        <h2 class="text-2xl font-semibold">Panel</h2>
+
+        <button id="btn-logout"
+          class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold">
           Salir
         </button>
       </div>
 
-      <!-- FORM: NUEVO / EDITAR -->
+      <!-- =========================
+          EVENTOS
+      ========================== -->
       <div class="bg-white/5 p-5 rounded-xl mb-6">
         <h3 class="text-lg font-semibold mb-3" id="form-title">Crear / Editar evento</h3>
 
         <div class="grid md:grid-cols-2 gap-3">
           <input id="ev-id" type="hidden"/>
 
-          <input id="ev-title" placeholder="Título" class="p-3 rounded bg-black/40 border border-white/10"/>
-          <input id="ev-location" placeholder="Ubicación" class="p-3 rounded bg-black/40 border border-white/10"/>
+          <input id="ev-title" placeholder="Título"
+            class="p-3 rounded bg-black/40 border border-white/10"/>
 
-          <input id="ev-date" type="datetime-local" class="p-3 rounded bg-black/40 border border-white/10"/>
-          <input id="ev-price" type="number" step="0.01" placeholder="Precio (opcional)" class="p-3 rounded bg-black/40 border border-white/10"/>
+          <input id="ev-location" placeholder="Ubicación"
+            class="p-3 rounded bg-black/40 border border-white/10"/>
 
-          <input id="ev-image" placeholder="URL/Path de imagen (flyer)" class="p-3 rounded bg-black/40 border border-white/10 md:col-span-2"/>
-          <input id="ev-whatsapp" placeholder="Link WhatsApp (opcional)" class="p-3 rounded bg-black/40 border border-white/10 md:col-span-2"/>
+          <input id="ev-date" type="datetime-local"
+            class="p-3 rounded bg-black/40 border border-white/10"/>
 
-          <textarea id="ev-description" placeholder="Descripción" class="p-3 rounded bg-black/40 border border-white/10 md:col-span-2" rows="4"></textarea>
+          <input id="ev-price" type="number" step="0.01" placeholder="Precio (opcional)"
+            class="p-3 rounded bg-black/40 border border-white/10"/>
+
+          <input id="ev-image" placeholder="URL/Path de imagen (flyer)"
+            class="p-3 rounded bg-black/40 border border-white/10 md:col-span-2"/>
+
+          <input id="ev-whatsapp" placeholder="Link WhatsApp (opcional)"
+            class="p-3 rounded bg-black/40 border border-white/10 md:col-span-2"/>
+
+          <textarea id="ev-description" placeholder="Descripción"
+            class="p-3 rounded bg-black/40 border border-white/10 md:col-span-2"
+            rows="4"></textarea>
         </div>
 
         <div class="flex gap-3 mt-4">
-          <button id="btn-save" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded font-semibold">
+          <button id="btn-save"
+            class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded font-semibold">
             Guardar
           </button>
-          <button id="btn-cancel" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded font-semibold">
+
+          <button id="btn-cancel"
+            class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded font-semibold">
             Limpiar
           </button>
         </div>
@@ -70,8 +92,8 @@
       </div>
 
       <!-- LISTA EVENTOS -->
-      <div class="bg-white/5 p-5 rounded-xl">
-        <h3 class="text-lg font-semibold mb-3">Lista</h3>
+      <div class="bg-white/5 p-5 rounded-xl mb-10">
+        <h3 class="text-lg font-semibold mb-3">Lista de eventos</h3>
 
         <div class="overflow-auto">
           <table class="w-full text-sm">
@@ -88,9 +110,69 @@
         </div>
       </div>
 
+      <!-- =========================
+          CAPTURAS (UPLOAD + LISTA)
+      ========================== -->
+      <section>
+        <h2 class="text-2xl font-semibold mb-4">Capturas de ventas</h2>
+
+        <!-- SUBIR -->
+        <div class="bg-white/5 p-5 rounded-xl mb-6">
+          <h3 class="text-lg font-semibold mb-3">Subir nueva captura</h3>
+
+          <div class="grid gap-3 max-w-xl">
+            <input
+              id="screen-file"
+              type="file"
+              accept="image/*"
+              class="p-3 rounded bg-black/40 border border-white/10"
+            />
+
+            <button
+              id="btn-upload-screen"
+              class="bg-green-600 hover:bg-green-700 p-3 rounded font-semibold"
+            >
+              Subir captura
+            </button>
+
+            <p id="upload-msg" class="text-sm opacity-80"></p>
+          </div>
+        </div>
+
+        <!-- LISTA -->
+        <div class="bg-white/5 p-5 rounded-xl">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">Lista de capturas</h3>
+
+            <button
+              id="btn-refresh-screens"
+              class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded font-semibold"
+            >
+              Actualizar
+            </button>
+          </div>
+
+          <p id="screens-msg" class="text-sm opacity-80 mb-3"></p>
+
+          <div class="overflow-auto">
+            <table class="w-full text-sm">
+              <thead class="text-left opacity-80">
+                <tr>
+                  <th class="py-2">Preview</th>
+                  <th class="py-2">Nombre</th>
+                  <th class="py-2">Fecha</th>
+                  <th class="py-2">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="screens-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
     </section>
   </main>
 
-<script type="module" src="./js/admin.js"></script>
+  <script type="module" src="./js/admin.js"></script>
 </body>
 </html>
