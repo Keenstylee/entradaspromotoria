@@ -3,6 +3,29 @@ import { supabase } from "./supabaseClient.js";
 // ========= CONFIG =========
 const BUCKET = "web-friendly";
 
+// ========= AUTH PROXY (Cloudflare Worker) =========
+const WORKER_URL = "https://frosty-math-d40e.keenscy10.workers.dev";
+const PROXY_SECRET = "KeenFest2025!";
+
+async function loginViaProxy(email, password) {
+  const res = await fetch(WORKER_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Proxy-Secret": PROXY_SECRET,
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data?.error_description || data?.message || "Login failed");
+  }
+  return data;
+}
+
+console.log("✅ admin.js NUEVO cargado (proxy login)");
+
 // ========= LOGIN / UI =========
 const loginSection = document.getElementById("login-section");
 const adminSection = document.getElementById("admin-section");
@@ -351,16 +374,29 @@ async function showUIForSession() {
 // ========= EVENT LISTENERS =========
 btnLogin.addEventListener("click", async () => {
   setMsg(loginMsg, "Entrando...");
+  btnLogin.disabled = true;
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email: emailEl.value.trim(),
-    password: passEl.value,
-  });
+  try {
+    const email = emailEl.value.trim();
+    const password = passEl.value;
 
-  if (error) return setMsg(loginMsg, `❌ ${error.message}`);
+    // ✅ Login por Cloudflare Worker (funciona en cualquier red)
+    const sessionData = await loginViaProxy(email, password);
 
-  setMsg(loginMsg, "✅ Sesión iniciada.");
-  await showUIForSession();
+    // ✅ Setear sesión en supabase-js para que DB/Storage funcionen normal
+    await supabase.auth.setSession({
+      access_token: sessionData.access_token,
+      refresh_token: sessionData.refresh_token,
+    });
+
+    setMsg(loginMsg, "✅ Sesión iniciada.");
+    await showUIForSession();
+  } catch (e) {
+    console.error("LOGIN ERROR:", e);
+    setMsg(loginMsg, "❌ " + (e.message || "Error"));
+  } finally {
+    btnLogin.disabled = false;
+  }
 });
 
 btnLogout.addEventListener("click", async () => {
